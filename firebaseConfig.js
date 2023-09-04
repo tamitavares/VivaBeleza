@@ -1,4 +1,6 @@
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAnG5bzp7EwoO8YPLJZsllECC9Y1-LMKQM",
@@ -10,14 +12,7 @@ const firebaseConfig = {
   measurementId: "G-37LK1XGT6Y"
 };
 
+
 const app = initializeApp(firebaseConfig);
-
-import SignUp from './src/views/public/SignUp'
-
-export default function App() {
-  return (
-    <SignUp></SignUp>
-  );
-}
-
-
+const auth = getAuth(app)
+const analytics = getAnalytics(app);
