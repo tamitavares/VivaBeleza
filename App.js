@@ -12,11 +12,11 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-import SignUp from './src/views/public/SignUp'
+import SignIn from './src/views/public/SignIn'
 
 export default function App() {
   return (
-    <SignUp></SignUp>
+    <SignIn></SignIn>
   );
 }
 
