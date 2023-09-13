@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 
 const SignIn = () => {
 
@@ -22,30 +23,10 @@ const SignIn = () => {
   };
 
   return (
+        
         <View style={styles.login}>
           <View style={styles.div}>
             <Text style={styles.textWrapper}>Bem vindo!</Text>
-            <View style={styles.menu}>
-              <View style={styles.overlap}>
-                <View style={styles.overlapGroupWrapper}>
-                  <View style={styles.overlapGroup}>
-                    <View style={styles.rectangle} />
-                    <View style={styles.ellipse} />
-                    <Image
-                      source={require('./images/codicon_home.png')}
-                      style={styles.codiconHome}
-                    />
-                    <Image source={require('./images/bi_person.png')} style={styles.group} />
-                  </View>
-                </View>
-                <Text style={styles.textWrapper2}>Minha conta</Text>
-                <Text style={styles.textWrapper3}>Agenda</Text>
-                <Image
-                  source={require('./images/uil_schedule.png')}
-                  style={styles.uilSchedule}
-                />
-              </View>
-            </View>
             <Text style={styles.p}>Faça login na sua conta:</Text>
             <View style={styles.divWrapper}>
               {/* <Text style={styles.textWrapper4}>Email</Text> */}
@@ -79,26 +60,7 @@ const SignIn = () => {
       );
     };
 
-    // <View style={styles.container}>
-    //   <Text style={styles.header}>Login</Text>
-    //   <TextInput
-    //     style={styles.input}
-    //     placeholder="Email"
-    //     onChangeText={(text) => setEmail(text)}
-    //     value={email}
-    //     keyboardType="email-address"
-    //   />
-    //   <TextInput
-    //     style={styles.input}
-    //     placeholder="Senha"
-    //     onChangeText={(text) => setPassword(text)}
-    //     value={password}
-    //     secureTextEntry={true}
-    //   />
-      // <TouchableOpacity style={styles.button} onPress={authSignIn}>
-      //   <Text style={styles.buttonText}>Entrar</Text>
-      // </TouchableOpacity>
-    // </View>
+
 
 
 const styles = StyleSheet.create({
