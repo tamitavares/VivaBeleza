@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
+import { useNavigation } from '@react-navigation/native';
 
 const SignIn = () => {
 
@@ -22,11 +23,18 @@ const SignIn = () => {
       });
   };
 
+  const navigation = useNavigation();
+
+  const navigateToSignUp = () => {
+    navigation.navigate('Home'); 
+  };
+
   return (
         
         <View style={styles.login}>
           <View style={styles.div}>
             <Text style={styles.textWrapper}>Bem vindo!</Text>
+            <Image source={require('./images/logo.png')} style={styles.logo}/>
             <Text style={styles.p}>Faça login na sua conta:</Text>
             <View style={styles.divWrapper}>
               {/* <Text style={styles.textWrapper4}>Email</Text> */}
@@ -49,12 +57,16 @@ const SignIn = () => {
             />            
             </View>
 
-            <TouchableOpacity style={styles.buttonEntrar} onPress={authSignIn}>
-              <Text style={styles.buttonText}>Entrar</Text>
+            <TouchableOpacity onPress={authSignIn}>
+              <Text style={styles.buttonEntrar}>Entrar</Text>
             </TouchableOpacity>
             
             <Text style={styles.textWrapper5}>Ainda não tem conta?</Text>
-            <Text style={styles.textWrapper6}>Cadastre-se</Text>
+
+            <TouchableOpacity onPress={navigateToSignUp}>
+              <Text style={styles.buttonCadastrar}>Cadastre-se</Text>
+            </TouchableOpacity>
+            
           </View>
         </View>
       );
@@ -64,6 +76,14 @@ const SignIn = () => {
 
 
 const styles = StyleSheet.create({
+  logo:{
+    height: 194,
+    left: '25%',
+    resizeMode: 'cover', // Em vez de object-fit: cover
+    position: 'absolute',
+    top: 0,
+    width: 194,
+  },
   login: {
     backgroundColor: '#fafafa',
     flex: 1,
@@ -229,10 +249,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 514,
   },
-  textWrapper6: {
+  buttonCadastrar: {
     color: '#b71fff',
     fontFamily: 'Montserrat-Medium',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '500',
     left: 274,
     letterSpacing: 0,
@@ -252,12 +272,14 @@ const styles = StyleSheet.create({
     top: 417,
   },
   buttonEntrar:{
+    color: '#b71fff',
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 16,
     alignItems: 'center',
     left: 320,
     position: 'absolute',
     top: 417,
-    color: '#b71fff',
-  }
+  },
 });
 
 export default SignIn
