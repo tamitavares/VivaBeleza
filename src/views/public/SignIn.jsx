@@ -26,7 +26,7 @@ const SignIn = () => {
   const navigation = useNavigation();
 
   const navigateToSignUp = () => {
-    navigation.navigate('Home'); 
+    navigation.navigate('SignUp'); 
   };
 
   return (
@@ -41,6 +41,7 @@ const SignIn = () => {
               <TextInput
               style={styles.textWrapper4}
               placeholder="Email"
+              placeholderTextColor="white" 
               onChangeText={(text) => setEmail(text)}
               value={email}
               keyboardType="email-address"
@@ -51,6 +52,7 @@ const SignIn = () => {
               <TextInput
               style={styles.textWrapper4}
               placeholder="Senha"
+              placeholderTextColor="white" 
               onChangeText={(text) => setPassword(text)}
               value={password}
               secureTextEntry={true}

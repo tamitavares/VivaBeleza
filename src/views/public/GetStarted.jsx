@@ -1,50 +1,134 @@
 import React from 'react';
-import { StyleSheet, Button, View, Dimensions, Text } from 'react-native';
+import { View, Image, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function App() {
-    
-    return (
+export const GetStarted = () => {
+
+    const navigation = useNavigation();
+
+    const navigateToSignUp = () => {
+        navigation.navigate('Login'); 
+    };
+    const navigateToSignIn = () => {
+        navigation.navigate('Login'); 
+    };
+
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.div}>
+        {/* <View style={styles.overlap}>
+          <Image
+            style={styles.logoFloral}
+            source={require('./images/logo.png')}
+          />
+          <Text style={styles.vivaBeleza}>Viva Beleza</Text>
+          <Text style={styles.vivaABelezaEm}>Viva Beleza em Cada Detalhe!</Text>
+        </View> */}
         <View>
-            <View style={styles.retangulo}>
-                <Text>VivaBeleza</Text>
-                <Text>Viva a Beleza em Cada Detalhe!</Text>
-            </View>
-            <View>
-                <View style={styles.button}>
-                    <Button
-                        title='Login'
-                        fontFamily='Monteserat'
-                        color="#fff"
-                    />
-                </View>
-                <View style={styles.button}>
-                    <Button
-                    title='Criar conta'
-                    color="#fff"
-                    />
-                </View>
-            </View>
+            <TouchableOpacity
+            style={styles.login}
+            onPress={navigateToSignIn}
+            >
+            <Text style={styles.text}>Entrar</Text>
+            </TouchableOpacity>
         </View>
-    );
-}
-
-const { width: screenWidth } = Dimensions.get('window');
+        <View>
+            <TouchableOpacity
+            style={styles.signup}
+            onPress={navigateToSignUp}
+            >
+            <Text style={styles.text}>Criar conta</Text>
+            </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    retangulo: {
-        minWidth: screenWidth,
-        maxWidth: screenWidth,
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 550,
-        flexShrink: 0,
-        backgroundColor: '#D987FF'
-    },
-    button: {
-        flewDirection: 'row',
-        justifyContent: 'center',
-        margin: 20,
-        borderRadius: 10,
-        backgroundColor: '#D987FF'
-    },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  div: {
+    backgroundColor: '#ffffff',
+    height: 800,
+    width: 600,
+    position: 'relative',
+  },
+  overlap: {
+    backgroundColor: '#d886ff',
+    height: 628,
+    minWidth: 600,
+    top: 0,
+    left: 0,
+  },
+  logoFloral: {
+    height: 313,
+    width: 313,
+    position: 'absolute',
+    top: 34,
+    left: 43,
+    resizeMode: 'cover',
+  },
+  vivaBeleza: {
+    color: '#000000',
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 23,
+    fontWeight: '700',
+    justifyContent: 'center',
+    textAlign: 'center',
+    letterSpacing: 0,
+    // lineHeight: normal,
+    position: 'absolute',
+    top: 359,
+    // left: 103,
+  },
+  vivaABelezaEm: {
+    height: 15,
+    width: 313,
+    position: 'absolute',
+    top: 427,
+    left: 42,
+  },
+  login: {
+    backgroundColor: '#d886ff',
+    height: 35,
+    width: 152,
+    position: 'absolute',
+    top: 500,
+    left:'20%',
+    borderRadius: 10,
+  },
+  overlapGroup: {
+    backgroundColor: '#d886ff',
+    height: 35,
+    width: 150,
+    position: 'relative',
+    borderRadius: 10,
+  },
+  text: {
+    color: '#ffffff',
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 14,
+    fontWeight: '500',
+    letterSpacing: 0,
+    lineHeight: 'normal',
+    textAlign: 'center',
+    position: 'absolute',
+    top: 9,
+    left: 33,
+    width: 85,
+  },
+  signup: {
+    backgroundColor: '#d886ff',
+    height: 35,
+    width: 152,
+    position: 'absolute',
+    top: 500,
+    right:'20%',
+    borderRadius: 10,
+  },
 });

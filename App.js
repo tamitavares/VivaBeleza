@@ -16,8 +16,10 @@ const app = initializeApp(firebaseConfig);
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import SignIn from './src/views/public/SignIn'
+import SignUp from './src/views/public/SignUp'
 import Agenda from './src/views/public/Agenda'
 import Home from './src/views/public/Home'
+
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -58,6 +60,7 @@ function MyTabs() {
         }} 
       />
       {/* <Tab.Screen name="SignUp" component={SignUp} /> */}
+      <Tab.Screen name="SignUp" component={SignUp} />
     </Tab.Navigator>
   );
 }

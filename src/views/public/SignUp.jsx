@@ -25,6 +25,7 @@ function SignUp() {
       <TextInput
         style={styles.input}
         placeholder="Email"
+        placeholderTextColor="white" 
         onChangeText={(text) => setEmail(text)}
         value={email}
         keyboardType="email-address"
@@ -32,6 +33,7 @@ function SignUp() {
       <TextInput
         style={styles.input}
         placeholder="Senha"
+        placeholderTextColor="white" 
         onChangeText={(text) => setPassword(text)}
         value={password}
         secureTextEntry={true}
@@ -59,7 +61,7 @@ const styles = StyleSheet.create({
   input: {
     width: '80%',
     height: 40,
-    borderColor: 'gray',
+    backgroundColor: '#b71fff',
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 10,
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
   button: {
     width: '80%',
     height: 40,
-    backgroundColor: 'blue',
+    backgroundColor: '#d886ff',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
