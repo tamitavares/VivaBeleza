@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 function SignUp() {
@@ -13,6 +13,7 @@ function SignUp() {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log("Usuário registrado:", user);
+        Alert.alert("Usuário cadastrado")
       })
       .catch(error => {
         console.error("Erro no SignUp:", error);

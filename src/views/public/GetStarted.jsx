@@ -2,16 +2,16 @@ import React from 'react';
 import { View, Image, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export const GetStarted = () => {
+export default GetStarted = () => {
 
     const navigation = useNavigation();
 
     const navigateToSignUp = () => {
-        navigation.navigate('Login'); 
+        navigation.navigate('Seila'); 
     };
-    const navigateToSignIn = () => {
-        navigation.navigate('Login'); 
-    };
+    // const navigateToSignIn = () => {
+    //     navigation.navigate('Login'); 
+    // };
 
 
   return (
@@ -25,14 +25,14 @@ export const GetStarted = () => {
           <Text style={styles.vivaBeleza}>Viva Beleza</Text>
           <Text style={styles.vivaABelezaEm}>Viva Beleza em Cada Detalhe!</Text>
         </View> */}
-        <View>
+        {/* <View>
             <TouchableOpacity
             style={styles.login}
             onPress={navigateToSignIn}
             >
             <Text style={styles.text}>Entrar</Text>
             </TouchableOpacity>
-        </View>
+        </View> */}
         <View>
             <TouchableOpacity
             style={styles.signup}
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   vivaBeleza: {
     color: '#000000',
-    fontFamily: 'Montserrat-Bold',
+    // fontFamily: 'Montserrat-Bold',
     fontSize: 23,
     fontWeight: '700',
     justifyContent: 'center',
@@ -111,11 +111,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#ffffff',
-    fontFamily: 'Montserrat-Medium',
+    // fontFamily: 'Montserrat-Medium',
     fontSize: 14,
     fontWeight: '500',
     letterSpacing: 0,
-    lineHeight: 'normal',
+    // lineHeight: 'normal',
     textAlign: 'center',
     position: 'absolute',
     top: 9,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import { View, Alert, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 import { useNavigation } from '@react-navigation/native';
@@ -16,6 +16,7 @@ const SignIn = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log("Login de usuário:", user);
+        Alert.alert("Usuário logado")
         return user
       })
       .catch(error => {
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     color: '#000000',
-    fontFamily: 'Montserrat-Bold',
+    ////fontFamily: 'Montserrat-Bold',
     fontSize: 23,
     fontWeight: '700',
     left: 43,
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
   },
   textWrapper2: {
     color: '#bab9b9',
-    fontFamily: 'Montserrat-Medium',
+    ////fontFamily: 'Montserrat-Medium',
     fontSize: 9,
     fontWeight: '500',
     left: 289,
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
   },
   textWrapper3: {
     color: '#bab9b9',
-    fontFamily: 'Montserrat-Medium',
+    ////fontFamily: 'Montserrat-Medium',
     fontSize: 9,
     fontWeight: '500',
     left: 65,
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
   },
   p: {
     color: '#000000',
-    fontFamily: 'Montserrat-Medium',
+    // //fontFamily: 'Montserrat-Medium',
     fontSize: 14,
     fontWeight: '500',
     left: 43,
@@ -222,7 +223,7 @@ const styles = StyleSheet.create({
   },
   textWrapper4: {
     color: '#ffffff',
-    fontFamily: 'Montserrat-Medium',
+    // //fontFamily: 'Montserrat-Medium',
     fontSize: 14,
     fontWeight: '500',
     left: 14,
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
   },
   textWrapper5: {
     color: '#000000',
-    fontFamily: 'Montserrat-Medium',
+    //fontFamily: 'Montserrat-Medium',
     fontSize: 14,
     fontWeight: '500',
     left: 41,
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
   },
   buttonCadastrar: {
     color: '#b71fff',
-    fontFamily: 'Montserrat-Medium',
+    //fontFamily: 'Montserrat-Medium',
     fontSize: 16,
     fontWeight: '500',
     left: 274,
@@ -264,7 +265,7 @@ const styles = StyleSheet.create({
   },
   textWrapper7: {
     color: '#b71fff',
-    fontFamily: 'Montserrat-Medium',
+    //fontFamily: 'Montserrat-Medium',
     fontSize: 14,
     fontWeight: '500',
     left: 320,
@@ -275,7 +276,7 @@ const styles = StyleSheet.create({
   },
   buttonEntrar:{
     color: '#b71fff',
-    fontFamily: 'Montserrat-Medium',
+    //fontFamily: 'Montserrat-Medium',
     fontSize: 16,
     alignItems: 'center',
     left: 320,
