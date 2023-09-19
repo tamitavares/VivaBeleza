@@ -4,9 +4,9 @@ import { auth } from './firebaseConfig';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import GetStarted from './src/views/public/GetStarted'
-import Seila from './src/views/public/Seila'
-
-
+import Navigator from './src/views/public/Navigator'
+import SignIn from './src/views/public/SignIn'
+import SignUp from './src/views/public/SignUp'
 
 
 const Stack = createStackNavigator();
@@ -19,8 +19,16 @@ function MyTabs() {
         component={GetStarted}
       />
       <Stack.Screen 
-        name="Seila" 
-        component={Seila}
+        name="SignIn" 
+        component={SignIn}
+      />
+      <Stack.Screen 
+        name="SignUp" 
+        component={SignUp}
+      />
+      <Stack.Screen 
+        name="Navigator" 
+        component={Navigator}
       />
     </Stack.Navigator>
   );

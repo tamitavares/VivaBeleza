@@ -9,6 +9,15 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigation = useNavigation();
+
+  const navigateToSignUp = () => {
+    navigation.navigate('SignUp'); 
+  };
+  const navigateToNavigator = () => {
+    navigation.navigate('Navigator'); 
+  };
+
   const auth = getAuth();
 
   const authSignIn = () => {
@@ -17,17 +26,11 @@ const SignIn = () => {
         const user = userCredential.user;
         console.log("Login de usuário:", user);
         Alert.alert("Usuário logado")
-        return user
+        return user, navigateToNavigator
       })
       .catch(error => {
         console.error("Usuário não registrado:", error);
       });
-  };
-
-  const navigation = useNavigation();
-
-  const navigateToSignUp = () => {
-    navigation.navigate('SignUp'); 
   };
 
   return (

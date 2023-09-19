@@ -1,11 +1,9 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import Agenda from './Agenda'
 import Home from './Home'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
-import GetStarted from './GetStarted'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 const Tab = createBottomTabNavigator();
@@ -53,12 +51,10 @@ function MyTabs() {
   );
 }
 
-const Seila = () => {
+const Navigator = () => {
   return (
-    // <NavigationContainer>
-      <MyTabs />
-    // </NavigationContainer>
+    <MyTabs />
   )
 }
 
-export default Seila
+export default Navigator

@@ -7,11 +7,11 @@ export default GetStarted = () => {
     const navigation = useNavigation();
 
     const navigateToSignUp = () => {
-        navigation.navigate('Seila'); 
+        navigation.navigate('SignUp'); 
     };
-    // const navigateToSignIn = () => {
-    //     navigation.navigate('Login'); 
-    // };
+    const navigateToSignIn = () => {
+        navigation.navigate('SignIn'); 
+    };
 
 
   return (
@@ -25,14 +25,14 @@ export default GetStarted = () => {
           <Text style={styles.vivaBeleza}>Viva Beleza</Text>
           <Text style={styles.vivaABelezaEm}>Viva Beleza em Cada Detalhe!</Text>
         </View> */}
-        {/* <View>
+        <View>
             <TouchableOpacity
             style={styles.login}
             onPress={navigateToSignIn}
             >
             <Text style={styles.text}>Entrar</Text>
             </TouchableOpacity>
-        </View> */}
+        </View>
         <View>
             <TouchableOpacity
             style={styles.signup}
