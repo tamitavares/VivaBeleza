@@ -1,134 +1,68 @@
-import React from 'react';
-import { View, Image, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native'
+import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 
-export default GetStarted = () => {
+const CertificadoItemm = () => {
 
     const navigation = useNavigation();
 
     const navigateToSignUp = () => {
-        navigation.navigate('SignUp'); 
-    };
-    const navigateToSignIn = () => {
-        navigation.navigate('SignIn'); 
-    };
-
+      navigation.navigate('SignUp'); 
+  };
+  const navigateToSignIn = () => {
+      navigation.navigate('SignIn'); 
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.div}>
-        {/* <View style={styles.overlap}>
-          <Image
-            style={styles.logoFloral}
-            source={require('./images/logo.png')}
-          />
-          <Text style={styles.vivaBeleza}>Viva Beleza</Text>
-          <Text style={styles.vivaABelezaEm}>Viva Beleza em Cada Detalhe!</Text>
-        </View> */}
-        <View>
+    <View style={styles.tela}>
+        <Image
+          style={styles.image}
+          source={require('./images/logo.png')}
+        />
+        <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
-            style={styles.login}
+            style={styles.button}
             onPress={navigateToSignIn}
             >
             <Text style={styles.text}>Entrar</Text>
             </TouchableOpacity>
-        </View>
-        <View>
             <TouchableOpacity
-            style={styles.signup}
+            style={styles.button}
             onPress={navigateToSignUp}
             >
-            <Text style={styles.text}>Criar conta</Text>
+            <Text style={styles.text}>Cadastrar</Text>
             </TouchableOpacity>
         </View>
-      </View>
     </View>
-  );
-};
+  )
+}
+
+export default CertificadoItemm
 
 const styles = StyleSheet.create({
-  container: {
+  tela: {
+    backgroundColor: '#fafafa',
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  div: {
-    backgroundColor: '#ffffff',
-    height: 800,
-    width: 600,
-    position: 'relative',
+  image: {
+    height: 300,
+    position: 'absolute',
+    top: 70,
+    width: 300,
   },
-  overlap: {
+  button: {
     backgroundColor: '#d886ff',
-    height: 628,
-    minWidth: 600,
-    top: 0,
-    left: 0,
-  },
-  logoFloral: {
-    height: 313,
-    width: 313,
-    position: 'absolute',
-    top: 34,
-    left: 43,
-    resizeMode: 'cover',
-  },
-  vivaBeleza: {
-    color: '#000000',
-    // fontFamily: 'Montserrat-Bold',
-    fontSize: 23,
-    fontWeight: '700',
-    justifyContent: 'center',
-    textAlign: 'center',
-    letterSpacing: 0,
-    // lineHeight: normal,
-    position: 'absolute',
-    top: 359,
-    // left: 103,
-  },
-  vivaABelezaEm: {
-    height: 15,
-    width: 313,
-    position: 'absolute',
-    top: 427,
-    left: 42,
-  },
-  login: {
-    backgroundColor: '#d886ff',
-    height: 35,
+    height: 60,
     width: 152,
-    position: 'absolute',
     top: 500,
-    left:'20%',
     borderRadius: 10,
-  },
-  overlapGroup: {
-    backgroundColor: '#d886ff',
-    height: 35,
-    width: 150,
-    position: 'relative',
-    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10
   },
   text: {
-    color: '#ffffff',
-    // fontFamily: 'Montserrat-Medium',
-    fontSize: 14,
-    fontWeight: '500',
-    letterSpacing: 0,
-    // lineHeight: 'normal',
-    textAlign: 'center',
-    position: 'absolute',
-    top: 9,
-    left: 33,
-    width: 85,
-  },
-  signup: {
-    backgroundColor: '#d886ff',
-    height: 35,
-    width: 152,
-    position: 'absolute',
-    top: 500,
-    right:'20%',
-    borderRadius: 10,
-  },
-});
+    color: 'white',
+    fontSize: 20
+  }
+})

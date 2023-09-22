@@ -2,8 +2,7 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Agenda from './Agenda'
 import Home from './Home'
-import SignIn from './SignIn'
-import SignUp from './SignUp'
+import Account from './Account'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 const Tab = createBottomTabNavigator();
@@ -32,8 +31,8 @@ function MyTabs() {
         }} 
       />
       <Tab.Screen 
-        name="Login" 
-        component={SignIn}
+        name="Minha Conta" 
+        component={Account}
         options={{
           tabBarLabel: "Minha conta",
           tabBarIcon: () => (
@@ -41,12 +40,6 @@ function MyTabs() {
           )
         }} 
       />
-      {/* <Tab.Screen name="SignUp" component={SignUp} /> */}
-      <Tab.Screen name="SignUp" component={SignUp} />
-      {/* <Tab.Screen 
-        name="GetStarted" 
-        component={GetStarted}
-      /> */}
     </Tab.Navigator>
   );
 }
