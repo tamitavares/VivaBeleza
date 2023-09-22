@@ -1,4 +1,4 @@
-import { auth } from './firebaseConfig';
+import { auth } from './src/firebaseConfig';
 
 
 import { createStackNavigator } from '@react-navigation/stack';
