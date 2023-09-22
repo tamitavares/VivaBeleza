@@ -26,7 +26,8 @@ const SignIn = () => {
         const user = userCredential.user;
         console.log("Login de usuário:", user);
         Alert.alert("Usuário logado")
-        return user, navigateToNavigator
+        navigateToNavigator()
+        return user
       })
       .catch(error => {
         console.error("Usuário não registrado:", error);
@@ -105,7 +106,9 @@ const styles = StyleSheet.create({
     width: 318,
     top: 110,
     margin: 10,
-    fontSize: 16
+    fontSize: 16,
+    marginBottom: 10,
+    paddingLeft: 10,
   },
   texto: {
     color: '#000000',
