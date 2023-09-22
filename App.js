@@ -11,7 +11,7 @@ import SignUp from './src/views/public/SignUp'
 
 const Stack = createStackNavigator();
 
-function MyTabs() {
+function StackNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen 
@@ -37,7 +37,7 @@ function MyTabs() {
 export default function App() {
   return (
     <NavigationContainer>
-      <MyTabs />
+      <StackNavigation />
     </NavigationContainer>
   );
 }
