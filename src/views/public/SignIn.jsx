@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Alert, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { app } from './../../firebaseConfig'
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -18,7 +19,7 @@ const SignIn = () => {
     navigation.navigate('Navigator'); 
   };
 
-  const auth = getAuth();
+  const auth = getAuth(app);
 
   const authSignIn = () => {
     console.log("APERTOU")
