@@ -21,7 +21,6 @@ const SignIn = () => {
   const auth = getAuth();
 
   const authSignIn = () => {
-    console.log("APERTOU")
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
