@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { app } from './../../firebaseConfig'
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -15,7 +16,7 @@ function SignUp() {
     navigation.navigate('SignIn'); 
   };
 
-  const auth = getAuth();
+  const auth = getAuth(app);
 
   const authSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
