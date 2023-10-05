@@ -1,12 +1,9 @@
-import { auth } from './src/firebaseConfig';
-
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import GetStarted from './src/views/public/GetStarted'
 import Navigator from './src/views/public/Navigator'
 import SignIn from './src/views/public/SignIn'
 import SignUp from './src/views/public/SignUp'
-import { useFonts } from 'expo-font'
 
 
 const Stack = createStackNavigator();
@@ -43,5 +40,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-

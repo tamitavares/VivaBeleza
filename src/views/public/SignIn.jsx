@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Alert, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from './../../firebaseConfig'
-
 import { useNavigation } from '@react-navigation/native';
+import { useFonts, Montserrat_700Bold, Montserrat_600SemiBold } from 'expo-font';
 
 const SignIn = () => {
 
@@ -93,9 +93,8 @@ const styles = StyleSheet.create({
   },
   titulo: {
     color: '#000000',
-    ////fontFamily: 'Montserrat-Bold',
+    //fontFamily: 'Montserrat-Bold',
     fontSize: 23,
-    fontWeight: '700',
     left: 43,
     position: 'absolute',
     top: 192,
@@ -114,18 +113,16 @@ const styles = StyleSheet.create({
   },
   texto: {
     color: '#000000',
-    //fontFamily: 'Montserrat-Medium',
+    fontFamily: 'Montserrat-Medium',
     fontSize: 16,
-    fontWeight: '500',
     left: 41,
     position: 'absolute',
     top: 514,
   },
   buttonCadastrar: {
     color: '#b71fff',
-    //fontFamily: 'Montserrat-Medium',
+    fontFamily: 'Montserrat-Medium',
     fontSize: 16,
-    fontWeight: '500',
     position: 'absolute',
     top: 210,
     left: '17%'
@@ -143,9 +140,8 @@ const styles = StyleSheet.create({
   textButtonEntrar:{
     color: '#ffffff',
     fontSize: 16,
-    fontWeight: '500',
     textAlign: 'center',
-    //fontFamily: 'Montserrat-Medium',
+    fontFamily: 'Montserrat-Medium',
   }
 });
 
