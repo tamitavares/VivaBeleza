@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { app } from './../../firebaseConfig'
+import { app } from './../../../firebaseConfig'
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -34,7 +34,7 @@ function SignUp() {
   return (
     <View style={styles.tela}>
             <Text style={styles.titulo}>Criar Conta</Text>
-            <Image source={require('./images/logo.png')} style={styles.logo}/>
+            <Image source={require('./../images/logo.png')} style={styles.logo}/>
             <Text style={{...styles.texto, top: 251, maxWidth: 320}}>Crie uma conta para acessar todas as
 funcionalidades do nosso aplicativo.</Text>
             <TextInput

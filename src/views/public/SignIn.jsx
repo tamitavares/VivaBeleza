@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Alert, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from './../../firebaseConfig'
+import { app } from './../../../firebaseConfig'
 import { useNavigation } from '@react-navigation/native';
 import { useFonts, Montserrat_700Bold, Montserrat_600SemiBold } from 'expo-font';
 
@@ -40,7 +40,7 @@ const SignIn = () => {
         
         <View style={styles.tela}>
             <Text style={styles.titulo}>Bem vindo!</Text>
-            <Image source={require('./images/logo.png')} style={styles.logo}/>
+            <Image source={require('./../images/logo.png')} style={styles.logo}/>
             <Text style={{...styles.texto, top: 251}}>Faça login na sua conta:</Text>
               <TextInput
               style={{...styles.textInputs, top: 110}}

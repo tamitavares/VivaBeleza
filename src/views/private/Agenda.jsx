@@ -6,7 +6,7 @@ const Agenda = () => {
     <View>
       <Text>Boas Vindas!</Text>
       {/* <Text> Faça o seu agendamento de acordo com os horários que melhor se adequem a você.</Text>
-      <Image source={require('./images/logo.png')} style={styles.imgLogo}/> */}
+      <Image source={require('./../images/logo.png')} style={styles.imgLogo}/> */}
     </View>
   )
 }
