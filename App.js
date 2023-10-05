@@ -1,6 +1,3 @@
-import { auth } from './src/firebaseConfig';
-
-
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import GetStarted from './src/views/public/GetStarted'
@@ -12,9 +9,11 @@ import SignUp from './src/views/public/SignUp'
 const Stack = createStackNavigator();
 
 function StackNavigation() {
+  
+
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen 
+      {/* <Stack.Screen 
         name="GetStarted" 
         component={GetStarted}
       />
@@ -25,7 +24,7 @@ function StackNavigation() {
       <Stack.Screen 
         name="SignUp" 
         component={SignUp}
-      />
+      /> */}
       <Stack.Screen 
         name="Navigator" 
         component={Navigator}
@@ -41,5 +40,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-
