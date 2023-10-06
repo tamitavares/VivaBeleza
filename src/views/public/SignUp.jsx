@@ -5,6 +5,7 @@ import { app } from './../../../firebaseConfig'
 
 import { useNavigation } from '@react-navigation/native';
 
+//firebase
 function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,6 +32,7 @@ function SignUp() {
       });
   };
 
+  //app
   return (
     <View style={styles.tela}>
             <Text style={styles.titulo}>Criar Conta</Text>
@@ -38,20 +40,31 @@ function SignUp() {
             <Text style={{...styles.texto, top: 251, maxWidth: 320}}>Crie uma conta para acessar todas as
 funcionalidades do nosso aplicativo.</Text>
             <TextInput
-              style={{...styles.textInputs, top: 110}}
+              style={{...styles.textInputs}}
               placeholder="   Nome"
               placeholderTextColor="white" 
               onChangeText={(text) => setUsername(text)}
               value={username}
             /> 
               <TextInput
-              style={{...styles.textInputs, top: 110}}
+              style={{...styles.textInputs}}
               placeholder="   Email"
               placeholderTextColor="white" 
               onChangeText={(text) => setEmail(text)}
               value={email}
               keyboardType="email-address"
             /> 
+            <View style={styles.justifyItems}>
+              <Text style={{...styles.textInputs, width:54, color: 'white', padding: 5}}> +55</Text>
+              <TextInput
+              style={{...styles.textInputs, width: 241}}
+              placeholder="   Telefone"
+              placeholderTextColor="white" 
+              onChangeText={(text) => setEmail(text)}
+              value={email}
+              keyboardType="phone-pad"
+              />
+            </View>
               <TextInput
               style={{...styles.textInputs}}
               placeholder="   Senha"
@@ -96,7 +109,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 192,
   },
-
+  justifyItems:{
+    display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'
+  },
   textInputs: {
     backgroundColor: '#b71fff',
     borderRadius: 10,
@@ -122,7 +137,7 @@ const styles = StyleSheet.create({
     height: 35,
     width: 130,
     position: 'absolute',
-    top: 500,
+    top: 600,
     right:'10%',
     borderRadius: 10,
     justifyContent: 'center'
