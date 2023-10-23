@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
 import { app } from './../../../firebaseConfig'
+import { collection, addDoc } from "firebase/firestore"; 
+
 
 import { useNavigation } from '@react-navigation/native';
+
+const auth = getAuth(app);
+const db = getFirestore(app)
 
 function SignUp() {
   const [email, setEmail] = useState('');
@@ -16,21 +23,36 @@ function SignUp() {
   const navigateToSignIn = () => {
     navigation.navigate('SignIn'); 
   };
+  
 
-  const auth = getAuth(app);
+  const createDoc = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        first: "Ada",
+        last: "Lovelace",
+        born: 1815
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
 
   const authSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log("Usuário registrado:", user);
-        Alert.alert("Usuário cadastrado")
+        // console.log("Usuário registrado:", user);
+        Alert.alert("Usuário " + username + " cadastrado com sucesso!")
         navigateToSignIn()
       })
       .catch(error => {
         console.error("Erro no SignUp:", error);
       });
+      createDoc()
   };
+
+
 
   return (
     <View style={styles.tela}>
