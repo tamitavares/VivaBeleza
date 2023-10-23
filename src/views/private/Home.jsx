@@ -204,13 +204,13 @@ const styles = StyleSheet.create({
   },
   titulo: {
     color: '#000000',
-    fontFamily: 'Montserrat_700Bold',
+    //fontFamily: 'Montserrat_700Bold',
     fontSize: 33,
     left: 20,
   },
   t2: {
     color: '#000000',
-    fontFamily: 'Montserrat_600SemiBold',
+    //fontFamily: 'Montserrat_600SemiBold',
     fontSize: 20,
     left: 10,
   },
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
     textAlign: 'justify',
-    fontFamily: 'Montserrat_500Medium'
+    //fontFamily: 'Montserrat_500Medium'
   },
 });
 

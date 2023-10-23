@@ -5,11 +5,11 @@ import { app } from './../../../firebaseConfig'
 
 import { useNavigation } from '@react-navigation/native';
 
-//firebase
 function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [phone, setPhone] = useState('');
 
   const navigation = useNavigation();
 
@@ -32,7 +32,6 @@ function SignUp() {
       });
   };
 
-  //app
   return (
     <View style={styles.tela}>
             <Text style={styles.titulo}>Criar Conta</Text>
@@ -40,31 +39,28 @@ function SignUp() {
             <Text style={{...styles.texto, top: 251, maxWidth: 320}}>Crie uma conta para acessar todas as
 funcionalidades do nosso aplicativo.</Text>
             <TextInput
-              style={{...styles.textInputs}}
+              style={{...styles.textInputs, top: 110}}
               placeholder="   Nome"
               placeholderTextColor="white" 
               onChangeText={(text) => setUsername(text)}
               value={username}
             /> 
+            <TextInput
+              style={{...styles.textInputs, top: 110}}
+              placeholder="   Telefone"
+              placeholderTextColor="white" 
+              onChangeText={(text) => setPhone(text)}
+              value={phone}
+              keyboardType="phone-pad"
+            /> 
               <TextInput
-              style={{...styles.textInputs}}
+              style={{...styles.textInputs, top: 110}}
               placeholder="   Email"
               placeholderTextColor="white" 
               onChangeText={(text) => setEmail(text)}
               value={email}
               keyboardType="email-address"
             /> 
-            <View style={styles.justifyItems}>
-              <Text style={{...styles.textInputs, width:54, color: 'white', padding: 5}}> +55</Text>
-              <TextInput
-              style={{...styles.textInputs, width: 241}}
-              placeholder="   Telefone"
-              placeholderTextColor="white" 
-              onChangeText={(text) => setEmail(text)}
-              value={email}
-              keyboardType="phone-pad"
-              />
-            </View>
               <TextInput
               style={{...styles.textInputs}}
               placeholder="   Senha"
@@ -87,7 +83,6 @@ funcionalidades do nosso aplicativo.</Text>
 
 
 
-
 const styles = StyleSheet.create({
   logo:{
     height: 194,
@@ -102,7 +97,7 @@ const styles = StyleSheet.create({
   },
   titulo: {
     color: '#000000',
-    ////fontFamily: 'Montserrat-Bold',
+    //////fontFamily: 'Montserrat-Bold',
     fontSize: 23,
     fontWeight: '700',
     left: 43,
@@ -125,7 +120,7 @@ const styles = StyleSheet.create({
   },
   texto: {
     color: '#000000',
-    //fontFamily: 'Montserrat-Medium',
+    ////fontFamily: 'Montserrat-Medium',
     fontSize: 16,
     fontWeight: '500',
     left: 41,
@@ -147,7 +142,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     textAlign: 'center',
-    //fontFamily: 'Montserrat-Medium',
+    ////fontFamily: 'Montserrat-Medium',
   }
 });
 

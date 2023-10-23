@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   titulo: {
     color: '#000000',
-    //fontFamily: 'Montserrat-Bold',
+    ////fontFamily: 'Montserrat-Bold',
     fontSize: 23,
     left: 43,
     position: 'absolute',
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   texto: {
     color: '#000000',
-    fontFamily: 'Montserrat-Medium',
+    //fontFamily: 'Montserrat-Medium',
     fontSize: 16,
     left: 41,
     position: 'absolute',
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   buttonCadastrar: {
     color: '#b71fff',
-    fontFamily: 'Montserrat-Medium',
+    //fontFamily: 'Montserrat-Medium',
     fontSize: 16,
     position: 'absolute',
     top: 210,
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
     textAlign: 'center',
-    fontFamily: 'Montserrat-Medium',
+    //fontFamily: 'Montserrat-Medium',
   }
 });
 
