@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
+
+//Firebase configs----------------------------------------------------------
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
@@ -11,6 +13,8 @@ import { useNavigation } from '@react-navigation/native';
 
 const auth = getAuth(app);
 const db = getFirestore(app)
+//--------------------------------------------------------------------------
+
 
 function SignUp() {
   const [email, setEmail] = useState('');
@@ -28,9 +32,9 @@ function SignUp() {
   const createDoc = async () => {
     try {
       const docRef = await addDoc(collection(db, "users"), {
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815
+        phone: phone,
+        email: email,
+        username: username
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
