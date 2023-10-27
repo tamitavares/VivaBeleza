@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 
 //Firebase configs----------------------------------------------------------
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 import { app } from './../../../firebaseConfig'
@@ -46,7 +46,16 @@ function SignUp() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        // console.log("Usuário registrado:", user);
+        updateProfile(auth.currentUser, {
+          displayName: username,
+          phoneNumber: phone
+        }).then(() => {
+          // Informações do perfil atualizadas com sucesso
+        }).catch((error) => {
+          // Tratamento de erros ao atualizar o perfil
+        });
+
+
         Alert.alert("Usuário " + username + " cadastrado com sucesso!")
         navigateToSignIn()
       })
