@@ -19,8 +19,8 @@ const db = getFirestore(app)
 function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [phone, setPhone] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const navigation = useNavigation();
 
@@ -32,9 +32,9 @@ function SignUp() {
   const createDoc = async () => {
     try {
       const docRef = await addDoc(collection(db, "users"), {
-        phone: phone,
         email: email,
-        username: username
+        displayName: displayName,
+        phoneNumber: phoneNumber,
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -47,16 +47,10 @@ function SignUp() {
       .then((userCredential) => {
         const user = userCredential.user;
         updateProfile(auth.currentUser, {
-          displayName: username,
-          phoneNumber: phone
-        }).then(() => {
-          // Informações do perfil atualizadas com sucesso
-        }).catch((error) => {
-          // Tratamento de erros ao atualizar o perfil
-        });
-
-
-        Alert.alert("Usuário " + username + " cadastrado com sucesso!")
+          displayName: displayName,
+          phoneNumber: phoneNumber,
+        })
+        Alert.alert("Usuário " + phoneNumber + " cadastrado com sucesso!")
         navigateToSignIn()
       })
       .catch(error => {
@@ -64,8 +58,6 @@ function SignUp() {
       });
       createDoc()
   };
-
-
 
   return (
     <View style={styles.tela}>
@@ -77,19 +69,29 @@ funcionalidades do nosso aplicativo.</Text>
               style={{...styles.textInputs, top: 110}}
               placeholder="   Nome"
               placeholderTextColor="white" 
-              onChangeText={(text) => setUsername(text)}
-              value={username}
+              onChangeText={(text) => setDisplayName(text)}
+              value={displayName}
             /> 
             <TextInput
-              style={{...styles.textInputs, top: 110}}
+              style={{...styles.textInputs}}
               placeholder="   Telefone"
               placeholderTextColor="white" 
-              onChangeText={(text) => setPhone(text)}
-              value={phone}
+              onChangeText={(text) => {
+                if (text.startsWith('+55')) {
+                  // Remove o prefixo "+55" se o usuário tentar editá-lo
+                  setPhoneNumber(text);
+                } else if (text.startsWith('+')) {
+                  // Evita que o usuário insira qualquer prefixo além de "+55"
+                } else {
+                  // Concatena o número de telefone com o prefixo "+55"
+                  setPhoneNumber(`+55${text}`);
+                } 
+              }}
+              value={phoneNumber}
               keyboardType="phone-pad"
             /> 
               <TextInput
-              style={{...styles.textInputs, top: 110}}
+              style={{...styles.textInputs}}
               placeholder="   Email"
               placeholderTextColor="white" 
               onChangeText={(text) => setEmail(text)}

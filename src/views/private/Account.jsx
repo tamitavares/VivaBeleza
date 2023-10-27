@@ -27,7 +27,11 @@ const Account = () => {
       <Image source={require('./../images/logo.png')} style={styles.logo} />
       <View style={styles.ellipse}>
         <Icon name="user" size={70} color="black" />
-        {user && <Text style={styles.titulo}>{user.displayName}</Text>} 
+      </View>
+      <View>
+        {user && <Text style={styles.titulo}>{user.displayName}</Text>}
+        {user && <Text>Email: {user.email}</Text>}
+        {user && <Text>Celular: {user.phoneNumber}</Text>}
       </View>
     </View>
   );
@@ -54,12 +58,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#D987FF',
     justifyContent: 'center',
     alignItems: 'center',
+    margin: 10,
   },
   titulo: {
     color: '#000000',
     //////fontFamily: 'Montserrat-Bold',
     fontSize: 23,
     fontWeight: '700',
-    top:80,
+    margin: 10
   },
 })
