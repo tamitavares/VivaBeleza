@@ -1,7 +1,3 @@
-// imports
-
-// import { auth } from "./firebaseConfig.js";
-
 import {
     getAuth,
     createUserWithEmailAndPassword,
