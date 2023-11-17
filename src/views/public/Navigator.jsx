@@ -9,7 +9,8 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      initialRouteName='Home'>
       <Tab.Screen 
         name="Agenda" 
         component={Agenda}

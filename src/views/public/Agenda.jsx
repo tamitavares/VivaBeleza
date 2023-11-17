@@ -70,6 +70,7 @@ const Agenda = () => {
             setSelected={(val) => horariosDisponiveis(val)} 
             data={data} 
             save="value"
+            style={styles.dropDown}
           />
 
           {exibirHoras ? (
@@ -82,7 +83,6 @@ const Agenda = () => {
                 <Pressable onPress={() => console.log(item.name)} style={styles.item}>
                   <Text style={styles.text}>{item.name}</Text>
                 </Pressable>
-                
               );
             }}
           />
@@ -92,20 +92,12 @@ const Agenda = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'flex-start',
-  },
   item: {
     alignItems: "center",
     backgroundColor: '#cc88ff',
     flexGrow: 1,
     margin: 3,
-    padding: 10
-  },
-  text: {
-    color: "#333333"
+    padding: 10,
   },
   titulo: {
     color: '#000000',
@@ -117,15 +109,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat_500Medium',
     textAlign: 'justify',
     fontSize: 18,
+    // top:10,
   },
-  buttonEntrar:{
-    backgroundColor: '#d886ff',
-    height: 'auto',
-    width: 60,
-    borderRadius: 10,
-    justifyContent: 'space-between',
-    flexDirection:'column-reverse',
-    // flexDirection:'row'
+  dropDown:{
+    top:50,
   },
 });
 
