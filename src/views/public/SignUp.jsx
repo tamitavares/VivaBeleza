@@ -32,12 +32,12 @@ function SignUp() {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      const uid = user.uid; // Obtém o UID do usuário criado
+      const uid = user.uid;
       const docRef = await addDoc(collection(db, 'users'), {
         email: email,
         displayName: displayName,
         phoneNumber: phoneNumber,
-        uid: uid, // Define o campo 'uid' com o UID do usuário
+        uid: uid,
       });
       console.log('Document written with ID: ', docRef.id);
       Alert.alert('Usuário ' + displayName + ' cadastrado com sucesso!');
