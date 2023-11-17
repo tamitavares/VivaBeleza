@@ -6,17 +6,17 @@ import { useNavigation } from '@react-navigation/native';
 import { useFonts, Montserrat_700Bold, Montserrat_600SemiBold } from 'expo-font';
 
 const SignIn = () => {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
 
   const navigateToSignUp = () => {
-    navigation.navigate('SignUp'); 
+    navigation.navigate('SignUp');
   };
+
   const navigateToNavigator = () => {
-    navigation.navigate('Navigator'); 
+    navigation.navigate('Navigator');
   };
 
   const auth = getAuth(app);
@@ -26,16 +26,14 @@ const SignIn = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log("Login de usuário:", user);
-        Alert.alert("Usuário logado")
-        navigateToNavigator()
-
-        return user, navigateToNavigator
+        Alert.alert("Usuário logado");
+        navigateToNavigator();
       })
       .catch(error => {
         console.error("Usuário não registrado:", error);
       });
   };
-
+  
   return (
         
         <View style={styles.tela}>

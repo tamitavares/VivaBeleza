@@ -22,7 +22,7 @@
     "firebase": "^10.5.0",
     "react": "18.2.0",
     "react-native": "0.72.6",
-    "react-native-vector-icons": "^10.0.0",
+    "react-native-vector-icons": "^10.0.1",
     "react-native-x-carousel": "^1.0.1"
   },
   "devDependencies": {

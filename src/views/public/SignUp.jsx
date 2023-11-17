@@ -27,36 +27,24 @@ function SignUp() {
   const navigateToSignIn = () => {
     navigation.navigate('SignIn'); 
   };
-  
 
-  const createDoc = async () => {
+  const authSignUp = async () => {
     try {
-      const docRef = await addDoc(collection(db, "users"), {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      const uid = user.uid; // Obtém o UID do usuário criado
+      const docRef = await addDoc(collection(db, 'users'), {
         email: email,
         displayName: displayName,
         phoneNumber: phoneNumber,
+        uid: uid, // Define o campo 'uid' com o UID do usuário
       });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
+      console.log('Document written with ID: ', docRef.id);
+      Alert.alert('Usuário ' + displayName + ' cadastrado com sucesso!');
+      navigateToSignIn();
+    } catch (error) {
+      console.error('Erro no SignUp:', error);
     }
-  };
-
-  const authSignUp = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        updateProfile(auth.currentUser, {
-          displayName: displayName,
-          phoneNumber: phoneNumber,
-        })
-        Alert.alert("Usuário " + phoneNumber + " cadastrado com sucesso!")
-        navigateToSignIn()
-      })
-      .catch(error => {
-        console.error("Erro no SignUp:", error);
-      });
-      createDoc()
   };
 
   return (

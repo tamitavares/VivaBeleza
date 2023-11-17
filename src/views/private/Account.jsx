@@ -2,24 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native'; // Importe o componente Text
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getDocs, collection, query, where } from 'firebase/firestore';
+
+import { getFirestore } from "firebase/firestore";
+import { app } from './../../../firebaseConfig'
+
+const db = getFirestore(app)
 
 const Account = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        // O usuário está autenticado
-        setUser(currentUser);
-      } else {
-        // O usuário não está autenticado
-        setUser(null);
-      }
-    });
+    const auth = getAuth(app);
 
-    // Limpeza da função de observação ao desmontar o componente
-    return () => unsubscribe();
+    const getAccount = async () => {
+      try {
+        const q = query(
+          collection(db, 'users'),
+          where('email', '==', auth.currentUser.email)
+        );
+        const usuario = await getDocs(q);
+
+        if (usuario.size > 0) {
+          const userData = usuario.docs[0].data();
+          setUser(userData);
+        } else {
+          alert('Usuário não encontrado.');
+        }
+      } catch (error) {
+        alert('Erro ao buscar o usuário: ' + error.message);
+      }
+    };
+    getAccount();
   }, []);
 
   return (
