@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { View, Alert, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from './../../firebaseConfig'
+import { app } from './../../../firebaseConfig'
 import { useNavigation } from '@react-navigation/native';
 import { useFonts, Montserrat_700Bold, Montserrat_600SemiBold } from 'expo-font';
 
 const SignIn = () => {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
 
   const navigateToSignUp = () => {
-    navigation.navigate('SignUp'); 
+    navigation.navigate('SignUp');
   };
+
   const navigateToNavigator = () => {
-    navigation.navigate('Navigator'); 
+    navigation.navigate('Navigator');
   };
 
   const auth = getAuth(app);
@@ -26,21 +26,19 @@ const SignIn = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log("Login de usuário:", user);
-        Alert.alert("Usuário logado")
-        navigateToNavigator()
-
-        return user, navigateToNavigator
+        Alert.alert("Usuário logado");
+        navigateToNavigator();
       })
       .catch(error => {
         console.error("Usuário não registrado:", error);
       });
   };
-
+  
   return (
         
         <View style={styles.tela}>
             <Text style={styles.titulo}>Bem vindo!</Text>
-            <Image source={require('./images/logo.png')} style={styles.logo}/>
+            <Image source={require('./../images/logo.png')} style={styles.logo}/>
             <Text style={{...styles.texto, top: 251}}>Faça login na sua conta:</Text>
               <TextInput
               style={{...styles.textInputs, top: 110}}
@@ -93,7 +91,7 @@ const styles = StyleSheet.create({
   },
   titulo: {
     color: '#000000',
-    //fontFamily: 'Montserrat-Bold',
+    ////fontFamily: 'Montserrat-Bold',
     fontSize: 23,
     left: 43,
     position: 'absolute',
@@ -113,7 +111,7 @@ const styles = StyleSheet.create({
   },
   texto: {
     color: '#000000',
-    fontFamily: 'Montserrat-Medium',
+    //fontFamily: 'Montserrat-Medium',
     fontSize: 16,
     left: 41,
     position: 'absolute',
@@ -121,7 +119,7 @@ const styles = StyleSheet.create({
   },
   buttonCadastrar: {
     color: '#b71fff',
-    fontFamily: 'Montserrat-Medium',
+    //fontFamily: 'Montserrat-Medium',
     fontSize: 16,
     position: 'absolute',
     top: 210,
@@ -141,7 +139,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
     textAlign: 'center',
-    fontFamily: 'Montserrat-Medium',
+    //fontFamily: 'Montserrat-Medium',
   }
 });
 

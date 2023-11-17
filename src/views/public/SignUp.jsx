@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { app } from './../../firebaseConfig'
+
+//Firebase configs----------------------------------------------------------
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
+import { app } from './../../../firebaseConfig'
+import { collection, addDoc } from "firebase/firestore"; 
+
 
 import { useNavigation } from '@react-navigation/native';
+
+const auth = getAuth(app);
+const db = getFirestore(app)
+//--------------------------------------------------------------------------
+
 
 function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const navigation = useNavigation();
 
@@ -16,36 +28,58 @@ function SignUp() {
     navigation.navigate('SignIn'); 
   };
 
-  const auth = getAuth(app);
-
-  const authSignUp = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("Usuário registrado:", user);
-        Alert.alert("Usuário cadastrado")
-        navigateToSignIn()
-      })
-      .catch(error => {
-        console.error("Erro no SignUp:", error);
+  const authSignUp = async () => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      const uid = user.uid; // Obtém o UID do usuário criado
+      const docRef = await addDoc(collection(db, 'users'), {
+        email: email,
+        displayName: displayName,
+        phoneNumber: phoneNumber,
+        uid: uid, // Define o campo 'uid' com o UID do usuário
       });
+      console.log('Document written with ID: ', docRef.id);
+      Alert.alert('Usuário ' + displayName + ' cadastrado com sucesso!');
+      navigateToSignIn();
+    } catch (error) {
+      console.error('Erro no SignUp:', error);
+    }
   };
 
   return (
     <View style={styles.tela}>
             <Text style={styles.titulo}>Criar Conta</Text>
-            <Image source={require('./images/logo.png')} style={styles.logo}/>
+            <Image source={require('./../images/logo.png')} style={styles.logo}/>
             <Text style={{...styles.texto, top: 251, maxWidth: 320}}>Crie uma conta para acessar todas as
 funcionalidades do nosso aplicativo.</Text>
             <TextInput
               style={{...styles.textInputs, top: 110}}
               placeholder="   Nome"
               placeholderTextColor="white" 
-              onChangeText={(text) => setUsername(text)}
-              value={username}
+              onChangeText={(text) => setDisplayName(text)}
+              value={displayName}
+            /> 
+            <TextInput
+              style={{...styles.textInputs}}
+              placeholder="   Telefone"
+              placeholderTextColor="white" 
+              onChangeText={(text) => {
+                if (text.startsWith('+55')) {
+                  // Remove o prefixo "+55" se o usuário tentar editá-lo
+                  setPhoneNumber(text);
+                } else if (text.startsWith('+')) {
+                  // Evita que o usuário insira qualquer prefixo além de "+55"
+                } else {
+                  // Concatena o número de telefone com o prefixo "+55"
+                  setPhoneNumber(`+55${text}`);
+                } 
+              }}
+              value={phoneNumber}
+              keyboardType="phone-pad"
             /> 
               <TextInput
-              style={{...styles.textInputs, top: 110}}
+              style={{...styles.textInputs}}
               placeholder="   Email"
               placeholderTextColor="white" 
               onChangeText={(text) => setEmail(text)}
@@ -74,7 +108,6 @@ funcionalidades do nosso aplicativo.</Text>
 
 
 
-
 const styles = StyleSheet.create({
   logo:{
     height: 194,
@@ -89,14 +122,16 @@ const styles = StyleSheet.create({
   },
   titulo: {
     color: '#000000',
-    ////fontFamily: 'Montserrat-Bold',
+    //////fontFamily: 'Montserrat-Bold',
     fontSize: 23,
     fontWeight: '700',
     left: 43,
     position: 'absolute',
     top: 192,
   },
-
+  justifyItems:{
+    display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'
+  },
   textInputs: {
     backgroundColor: '#b71fff',
     borderRadius: 10,
@@ -110,7 +145,7 @@ const styles = StyleSheet.create({
   },
   texto: {
     color: '#000000',
-    //fontFamily: 'Montserrat-Medium',
+    ////fontFamily: 'Montserrat-Medium',
     fontSize: 16,
     fontWeight: '500',
     left: 41,
@@ -122,7 +157,7 @@ const styles = StyleSheet.create({
     height: 35,
     width: 130,
     position: 'absolute',
-    top: 500,
+    top: 600,
     right:'10%',
     borderRadius: 10,
     justifyContent: 'center'
@@ -132,7 +167,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     textAlign: 'center',
-    //fontFamily: 'Montserrat-Medium',
+    ////fontFamily: 'Montserrat-Medium',
   }
 });
 

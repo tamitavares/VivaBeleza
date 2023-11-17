@@ -1,20 +1,21 @@
 // imports
 
-// import { auth } from "./firebaseConfig.js";
+import { app } from './../../../firebaseConfig'
 
 import {
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
+    onAuthStateChanged,
 } from "firebase/auth";
 
 export default class AuthController {
     constructor() {
-        this.auth = getAuth();
+        this.auth = getAuth(app);
     }
 
-    authSignUp(email, password) {
+    async authSignUp(email, password) {
         createUserWithEmailAndPassword(this.auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
@@ -25,7 +26,7 @@ export default class AuthController {
 
     //SignIn
 
-    authSignIn(email, password) {
+    async authSignIn(email, password) {
         return signInWithEmailAndPassword(this.auth, email, password).then(
             (userCredential) => {
                 const user = userCredential.user;
@@ -36,7 +37,7 @@ export default class AuthController {
 
     //Get Current User
 
-    authGetCurrentUser() {
+    async authGetCurrentUser() {
         const user = this.auth.currentUser;
         if (user) {
             console.log("User is signed in");
@@ -48,7 +49,7 @@ export default class AuthController {
 
     //SignOut
 
-    authSignOut() {
+    async authSignOut() {
         return signOut(this.auth).then(() => {
             console.log("signOut successful");
         });

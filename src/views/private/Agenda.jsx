@@ -6,7 +6,7 @@ const Agenda = () => {
     <View>
       <Text>Boas Vindas!</Text>
       {/* <Text> Faça o seu agendamento de acordo com os horários que melhor se adequem a você.</Text>
-      <Image source={require('./images/logo.png')} style={styles.imgLogo}/> */}
+      <Image source={require('./../images/logo.png')} style={styles.imgLogo}/> */}
     </View>
   )
 }
@@ -26,7 +26,7 @@ const Agenda = () => {
 //   },
 //   titulo: {
 //     color: '#000000',
-//     ////fontFamily: 'Montserrat-Bold',
+//     //////fontFamily: 'Montserrat-Bold',
 //     fontSize: 33,
 //     fontWeight: '700',
 //     left: 20,
@@ -35,7 +35,7 @@ const Agenda = () => {
 //   },
 //   t2: {
 //     color: '#000000',
-//     ////fontFamily: 'Montserrat-Bold',
+//     //////fontFamily: 'Montserrat-Bold',
 //     fontSize: 20,
 //     fontWeight: '500',
 //     left: 10,

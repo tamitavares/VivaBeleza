@@ -8,49 +8,49 @@ const { width } = Dimensions.get('window');
 
 const DATA = [
   {
-    coverImageUri: require('./images/manicure.png'),
+    coverImageUri: require('./../images/manicure.png'),
     cornerLabelColor: '#b71fff',
     cornerLabelText: 'MANICURE',
     description: 'Manicure é o profissional responsável pelo embelezamento e saúde das unhas das mãos, realizando cortes de unhas, cuidados da cutícula, lixamento e polimento das unhas bem como a esmaltação e decoração das mesmas.'
   },
   {
-    coverImageUri: require('./images/pedicure.png'),
+    coverImageUri: require('./../images/pedicure.png'),
     cornerLabelColor: '#b71fff',
     cornerLabelText: 'PEDICURE',
     description: 'Pedicure é o profissional responsável pelo embelezamento e saúde das unhas dos pés, realizando cortes de unhas, cuidados da cutícula, lixamento e polimento das unhas bem como a esmaltação e decoração das mesmas.'
   },
   {
-    coverImageUri: require('./images/depilacao.png'),
+    coverImageUri: require('./../images/depilacao.png'),
     cornerLabelColor: '#b71fff',
     cornerLabelText: 'DEPILAÇÃO NA CERA',
     description: 'A depilação com cera promove a remoção completa dos fios, por isso sua duração é maior que a da gilete.'
   },
   {
-    coverImageUri: require('./images/limpeza.png'),
+    coverImageUri: require('./../images/limpeza.png'),
     cornerLabelColor: '#b71fff',
     cornerLabelText: 'LIMPEZA DE PELE',
     description: 'A limpeza de pele tem como objetivo remover os cravos e as impurezas, desobstruir os poros e melhorar a capacidade de absorção da pele, auxiliando na oxigenação, hidratação, nutrição e clareamento da pele.'
   },
   {
-    coverImageUri: require('./images/spa.png'),
+    coverImageUri: require('./../images/spa.png'),
     cornerLabelColor: '#b71fff',
     cornerLabelText: 'SPA DOS PÉS',
     description:'O spa dos pés é um tratamento relaxante para hidratar a região dos pés de modo que voltem a parecer como os de bebês.'
   },
   {
-    coverImageUri: require('./images/Design.png'),
+    coverImageUri: require('./../images/Design.png'),
     cornerLabelColor: '#b71fff',
     cornerLabelText: 'MICROPIGMENTAÇÃO DE SOBRANCELHAS',
     description:'A micropigmentação é a técnica de preencher as sobrancelhas fio a fio, através de um aparelho que funciona por agulhas e estímulos de corrente elétrica.'
   },
   {
-    coverImageUri: require('./images/micropigmentacao.png'),
+    coverImageUri: require('./../images/micropigmentacao.png'),
     cornerLabelColor: '#b71fff',
     cornerLabelText: 'DESIGN DE SOBRANCELHAS',
     description: 'O Design consiste em remodelar as sobrancelhas com o uso da cera ou pinça, de forma a valorizar o olhar e embelezar o rosto, trazendo equilíbrio e simetria adequada.'
   },
   {
-    coverImageUri: require('./images/micropigmentacao-labial.jpg'),
+    coverImageUri: require('./../images/micropigmentacao-labial.jpg'),
     cornerLabelColor: '#b71fff',
     cornerLabelText: 'MICROPIGMENTAÇÃO LABIAL',
     description: 'A micropigmentação labial é um procedimento estético onde são aplicados pigmentos nos lábios, a fim de definir melhor o seu contorno, dar cor e criar um aspecto de mais volume.'
@@ -59,31 +59,31 @@ const DATA = [
 
 const DATA1 = [
   {
-    coverImageUri: require('./images/micropigmentacao-labial.jpg'),
+    coverImageUri: require('./../images/micropigmentacao-labial.jpg'),
     cornerLabelColor: '#b71fff',
     cornerLabelText: 'Glow lips + Micro dos labios R$ 600,00',
     description: 'O glow lips é um tratamento labial que revitaliza, hidrata e realça com naturalidade a cor dos lábios, deixando uma textura glossy. \nJá a micropigmentação labial é um procedimento estético onde são aplicados pigmentos nos lábios, a fim de definir melhor o seu contorno, dar cor e criar um aspecto de mais volume.',
   },
   {
-    coverImageUri: require('./images/manicure-combo.png'),
+    coverImageUri: require('./../images/manicure-combo.png'),
     cornerLabelColor: '#b71fff',
     cornerLabelText: 'MANICURE + PEDICURE R$ 60,00',
     description: 'Manicure/pedicure é o profissional responsável pelo embelezamento e saúde das unhas das mãos e dos pés, realizando cortes de unhas, cuidados da cutícula, lixamento e polimento das unhas bem como a esmaltação e decoração das mesmas.'
   },
   {
-    coverImageUri: require('./images/limp-massagem.png'),
+    coverImageUri: require('./../images/limp-massagem.png'),
     cornerLabelColor: '#b71fff',
     cornerLabelText: 'LIMPEZA DE PELE + MASSAGEM RELAXANTE R$ 150,00',
     description: 'A limpeza de pele tem como objetivo remover os cravos e as impurezas, desobstruir os poros e melhorar a capacidade de absorção da pele, auxiliando na oxigenação, hidratação, nutrição e clareamento da pele.\nA massagem relaxante é uma técnica que aplica movimentos suaves utilizando apenas as mãos na musculatura do corpo, como cotovelos, punhos e antebraços, para liberação da ocitocina e ralaxamento muscular e diminuição do estresse.'
   },
   {
-    coverImageUri: require('./images/spa.png'),
+    coverImageUri: require('./../images/spa.png'),
     cornerLabelColor: '#b71fff',
     cornerLabelText: 'PEDICURE + SPA DOS PÉS R$ 50,00',
     description: 'O spa dos pés é um tratamento relaxante para hidratar a região dos pés de modo que voltem a parecer como os de bebês.'
   },
   {
-    coverImageUri: require('./images/micropigmentacao.png'),
+    coverImageUri: require('./../images/micropigmentacao.png'),
     cornerLabelColor: '#b71fff',
     cornerLabelText: 'DESIGN DE SOBRANCELHAS + HENNA R$ 70,00',
     description:  'O Design consiste em remodelar as sobrancelhas com o uso da cera ou pinça, de forma a valorizar o olhar e embelezar o rosto, trazendo equilíbrio e simetria adequada.\nJá a Henna vem com a função de corrigir pequenas falhas, alongar e realçar as sobrancelhas.\nCom o uso dessas duas técnicas é possível obter um resultado perfeito e impactante no seu olhar!'
@@ -117,7 +117,7 @@ const Home = () => {
     <View style={styles.container}>
       <View style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
         <Text style={styles.titulo}>Bem vindo!</Text>
-        <Image source={require('./images/logo.png')} style={styles.imgLogo} />
+        <Image source={require('./../images/logo.png')} style={styles.imgLogo} />
       </View>
       <Text style={styles.t2}> Serviços Disponíveis </Text>
       <Carousel
@@ -204,13 +204,13 @@ const styles = StyleSheet.create({
   },
   titulo: {
     color: '#000000',
-    fontFamily: 'Montserrat_700Bold',
+    //fontFamily: 'Montserrat_700Bold',
     fontSize: 33,
     left: 20,
   },
   t2: {
     color: '#000000',
-    fontFamily: 'Montserrat_600SemiBold',
+    //fontFamily: 'Montserrat_600SemiBold',
     fontSize: 20,
     left: 10,
   },
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
     textAlign: 'justify',
-    fontFamily: 'Montserrat_500Medium'
+    //fontFamily: 'Montserrat_500Medium'
   },
 });
 
