@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image, Dimensions, Alert, Modal, Pressable } from 'react-native'
+import { StyleSheet, View, Text, Image, Dimensions, Alert, Modal, Pressable, ScrollView } from 'react-native'
 import Carousel, { PaginationLight } from 'react-native-x-carousel';
 import { useFonts, Montserrat_700Bold, Montserrat_600SemiBold,  Montserrat_500Medium } from '@expo-google-fonts/montserrat';
 import React, {useState} from 'react';
@@ -114,47 +114,49 @@ const Home = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <View style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
-        <Text style={styles.titulo}>Bem vindo!</Text>
-        <Image source={require('./../images/logo.png')} style={styles.imgLogo} />
-      </View>
-      <Text style={styles.t2}> Serviços Disponíveis </Text>
-      <Carousel
-        pagination={PaginationLight}
-        renderItem={renderItem}
-        data={DATA}
-        loop
-        autoplay
-      />
-      <Text style={styles.t2}> Pacotes </Text>
-      <Carousel
-        pagination={PaginationLight}
-        renderItem={renderItem}
-        data={DATA1}
-        loop
-        autoplay
-      />
-      <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-        setModalVisible(!modalVisible);
-      }}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.textStyle}>{modalData?modalData.description:""}</Text>
-          <Pressable
-            style={[styles.button, styles.button]}
-            onPress={() => setModalVisible(!modalVisible)}>
-            <Text style={styles.textStyle}>Fechar</Text>
-          </Pressable>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+          <Text style={styles.titulo}>Bem vindo!</Text>
+          <Image source={require('./../images/logo.png')} style={styles.imgLogo} />
         </View>
+        <Text style={styles.t2}> Serviços Disponíveis </Text>
+        <Carousel
+          pagination={PaginationLight}
+          renderItem={renderItem}
+          data={DATA}
+          loop
+          autoplay
+        />
+        <Text style={styles.t2}> Pacotes </Text>
+        <Carousel
+          pagination={PaginationLight}
+          renderItem={renderItem}
+          data={DATA1}
+          loop
+          autoplay
+        />
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.textStyle}>{modalData?modalData.description:""}</Text>
+            <Pressable
+              style={[styles.button, styles.button]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>Fechar</Text>
+            </Pressable>
+          </View>
+        </View>
+        </Modal>
       </View>
-      </Modal>
-    </View>
+    </ScrollView>
   );
 };
   

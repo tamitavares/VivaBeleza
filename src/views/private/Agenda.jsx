@@ -21,6 +21,7 @@ const Agenda = () => {
   const [horarioSelecionado, setHorarioSelecionado] = useState(null);
   const [dataSelecionada, setDataSelecionada] = useState(null);
   const [camposPreenchidos, setCamposPreenchidos] = useState(false);
+  const [horarioOcupado, setHorarioOcupado] = useState(false);
 
   Date.prototype.addDays = function (days) {
     const date = new Date(this.valueOf());
@@ -119,22 +120,46 @@ const Agenda = () => {
   const criarAgendamento = async () => {
     try {
       if (servico && horario && dataSelecionada) {
+        const horarioOcupado = await verificarHorarioOcupado(dataSelecionada, horario);
+        if (horarioOcupado) {
+          Alert.alert('Erro ao agendar:', 'Este horário já está ocupado. Escolha outro horário.');
+          setHorarioOcupado(true);
+          return;
+        }
+  
         const agendamentoData = { usuario: user, servico: servico, horario: horario, data: dataSelecionada };
         await addDoc(collection(db, 'agendamentos'), agendamentoData);
         const mensagemAlerta = `Agendado com sucesso!\nDia: ${selected}\nHorário: ${horario}\nProcedimento: ${servico}`;
         Alert.alert('Sucesso', mensagemAlerta);
+        
         setServico('');
         setHorario('');
         setCamposPreenchidos(true);
+        setHorarioOcupado(false);
       } else {
         Alert.alert('Erro ao agendar:', 'Preencha todos os campos antes de agendar.');
         setCamposPreenchidos(false);
-      }  
+      }   
     } catch (error) {
       Alert.alert('Erro ao agendar:', error.message);
     }
   };
 
+  const verificarHorarioOcupado = async (data, horario) => {
+    try {
+      const q = query(
+        collection(db, 'agendamentos'),
+        where('data', '==', data),
+        where('horario', '==', horario)
+      );
+      const agendamentos = await getDocs(q);
+      return agendamentos.size > 0;
+    } catch (error) {
+      console.error('Erro ao verificar horário ocupado:', error);
+      return true;
+    }
+  };
+  
   return (
     <SafeAreaView>
       <Text style={styles.titulo}> Boas vindas à sessão de agendamento!</Text>
