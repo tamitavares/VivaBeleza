@@ -1,8 +1,8 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Agenda from './Agenda'
-import Home from './Home'
-import Account from './Account'
+import Agenda from './../private/Agenda'
+import Home from './../private/Home'
+import Account from './../private/Account'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 const Tab = createBottomTabNavigator();

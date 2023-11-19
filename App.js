@@ -5,7 +5,6 @@ import Navigator from './src/views/public/Navigator'
 import SignIn from './src/views/public/SignIn'
 import SignUp from './src/views/public/SignUp'
 
-
 const Stack = createStackNavigator();
 
 function StackNavigation() {
@@ -13,7 +12,7 @@ function StackNavigation() {
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      {/* <Stack.Screen 
+      <Stack.Screen 
         name="GetStarted" 
         component={GetStarted}
       />
@@ -24,7 +23,7 @@ function StackNavigation() {
       <Stack.Screen 
         name="SignUp" 
         component={SignUp}
-      /> */}
+      />
       <Stack.Screen 
         name="Navigator" 
         component={Navigator}

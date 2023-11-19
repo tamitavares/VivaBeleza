@@ -17,7 +17,7 @@ const CertificadoItemm = () => {
     <View style={styles.tela}>
         <Image
           style={styles.image}
-          source={require('./images/logo.png')}
+          source={require('./../images/logo.png')}
         />
         <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
