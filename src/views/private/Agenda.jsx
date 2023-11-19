@@ -1,6 +1,6 @@
 import { FlatList, SafeAreaView, StyleSheet, Text, Pressable, Button, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
-// import { useFonts, Montserrat_600SemiBold, Montserrat_500Medium, Montserrat_500Medium_Italic, Montserrat_600SemiBold_Italic } from '@expo-google-fonts/montserrat';
+import {useFonts, Montserrat_500Medium, Montserrat_600SemiBold} from '@expo-google-fonts/montserrat'
 import { SelectList } from 'react-native-dropdown-select-list'
 
 import { getAuth} from 'firebase/auth';
@@ -17,10 +17,8 @@ const Agenda = () => {
   const [servico, setServico] = useState("");
   const [horario, setHorario] = useState("");
   const [user, setUser] = useState("");
-  // const [idUser, setIdUser] = useState("");
-  // const [fontsLoaded] = useFonts({ Montserrat_600SemiBold, Montserrat_500Medium, Montserrat_500Medium_Italic, Montserrat_600SemiBold_Italic });
-  
-  // if (!fontsLoaded) return null;
+  const [fontsLoaded] = useFonts({ Montserrat_600SemiBold, Montserrat_500Medium});
+  const [horarioSelecionado, setHorarioSelecionado] = useState(null);
 
   Date.prototype.addDays = function (days) {
     const date = new Date(this.valueOf());
@@ -57,18 +55,18 @@ const Agenda = () => {
   const horariosDisponiveis = (val) => {
     setSelected(val);
     setExibir(true);
-    console.log(val);
-    console.log(exibirHoras);
   };
 
   const handleSevicoSelection = (selected) => {
     setServico(selected);
   };
-  const handleHorarioSelection = (selected) => {
-    setHorario(selected);
+  const handleHorarioSelection = (selectedHorario) => {
+    setHorario(selectedHorario);
+    setHorarioSelecionado(selectedHorario);
   };
 
-
+  if (!fontsLoaded) return null;
+  
   const data = [
     { key: '1', value: `${dataAtual.addDays(1).getDate()}/${dataAtual.addDays(1).getMonth() + 1}` },
     { key: '2', value: `${dataAtual.addDays(2).getDate()}/${dataAtual.addDays(2).getMonth() + 1}` },
@@ -119,7 +117,8 @@ const Agenda = () => {
     try {
       const agendamentoData = { usuario: user, servico: servico, horario: horario };
       await addDoc(collection(db, 'agendamentos'), agendamentoData);
-      Alert.alert('Agendado com sucesso!');
+      const mensagemAlerta = `Agendado com sucesso!\nDia: ${selected}\nHorário: ${horario}\nProcedimento: ${servico}`;
+      Alert.alert('Sucesso', mensagemAlerta);
       setServico('');
       setHorario('');
     } catch (error) {
@@ -143,21 +142,22 @@ const Agenda = () => {
         save="value"
       />
 
-{exibirHoras ? (
-  <FlatList
-    data={state.data} 
-    setSelected={(val) => handleHorarioSelection(val)}
-    keyExtractor={(item) => item.id}
-    numColumns={3}
-    renderItem={({ item }) => {
-      return (
-        <Pressable onPress={() => alert(item.name)} style={styles.item}>
-          <Text style={styles.text}>{item.name}</Text>
-        </Pressable>
-      );
-    }}
-  />
-) : null}
+      {exibirHoras ? (
+        <FlatList
+          data={state.data} 
+          setSelected={(val) => handleHorarioSelection(val)}
+          keyExtractor={(item) => item.id}
+          numColumns={3}
+          renderItem={({ item }) => {
+            return (
+              <Pressable onPress={() => handleHorarioSelection(item.value) }
+              style={[ styles.item, {backgroundColor: item.value === horarioSelecionado ? '#3702E0' : '#cc88ff' },]}>
+                <Text style={styles.text}>{item.name}</Text>
+              </Pressable>
+            );
+          }}
+        />
+      ) : null}
 
       <Button title="Agendar" onPress={criarAgendamento} />
     </SafeAreaView>
@@ -180,16 +180,16 @@ const styles = StyleSheet.create({
     padding: 10
   },
   text: {
-    color: "#333333"
+    color: "#ffff"
   },
   titulo: {
     color: '#000000',
-    // fontFamily: 'Montserrat_600SemiBold',
+    fontFamily: 'Montserrat_600SemiBold',
     fontSize: 18,
   },
   t2: {
     color: '#000000',
-    // fontFamily: 'Montserrat_500Medium',
+    fontFamily: 'Montserrat_500Medium',
     textAlign: 'justify',
     fontSize: 18,
   },
@@ -200,6 +200,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'space-between',
     flexDirection:'column-reverse',
-    // flexDirection:'row'
   },
 });
