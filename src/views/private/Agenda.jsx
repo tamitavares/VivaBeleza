@@ -2,6 +2,8 @@ import { FlatList, SafeAreaView, StyleSheet, Text, Pressable } from 'react-nativ
 import React, { useState } from 'react'
 import { useFonts, Montserrat_600SemiBold, Montserrat_500Medium, Montserrat_500Medium_Italic, Montserrat_600SemiBold_Italic } from '@expo-google-fonts/montserrat';
 import { SelectList } from 'react-native-dropdown-select-list'
+import { firebase } from '../../../firebaseConfig';
+
 
 
 const Agenda = () => {
@@ -16,8 +18,34 @@ const Agenda = () => {
     date.setDate(date.getDate() + days)
     return date;
   }
-
+  
   const dataAtual = new Date()
+
+  async (item) => {
+    try {
+      const db = firebase.firestore();
+
+      const reservas = await db.collection('agendamentos')
+        .where('data', '==', selected)
+        .where('horario', '==', item.name)
+        .get();
+
+      if (reservas.docs.length > 0) {
+        console.log('Horário já reservado');
+        return;
+      }
+
+      // Adiciona o agendamento ao Firebase
+      await db.collection('agendamentos').add({
+        horario: item.name,
+        data: selected,
+      });
+
+      console.log('Horário reservado com sucesso!');
+    } catch (error) {
+      console.error('Erro ao reservar horário:', error);
+    }
+  };
 
   const horariosDisponiveis = (val)=>{
     setSelected(val);
@@ -62,15 +90,15 @@ const Agenda = () => {
   };
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.view}>
           <Text style={styles.titulo}> Boas vindas à sessão de agendamento!</Text>
+          {/* <Text style={styles.t2}>Selecione o serviço desejado</Text> */}
           <Text style={styles.t2}>Datas e horários disponíveis</Text> 
           
           <SelectList 
             setSelected={(val) => horariosDisponiveis(val)} 
             data={data} 
             save="value"
-            style={styles.dropDown}
           />
 
           {exibirHoras ? (
@@ -92,9 +120,13 @@ const Agenda = () => {
 };
 
 const styles = StyleSheet.create({
+  view: {
+    backgroundColor: '#ffff',
+    flexGrow: 1,
+  },
   item: {
     alignItems: "center",
-    backgroundColor: '#cc88ff',
+    backgroundColor: '#d886ff',
     flexGrow: 1,
     margin: 3,
     padding: 10,
@@ -107,13 +139,9 @@ const styles = StyleSheet.create({
   t2: {
     color: '#000000',
     fontFamily: 'Montserrat_500Medium',
-    textAlign: 'justify',
+    textAlign: 'left',
     fontSize: 18,
-    // top:10,
-  },
-  dropDown:{
-    top:50,
-  },
+    },
 });
 
 export default Agenda
