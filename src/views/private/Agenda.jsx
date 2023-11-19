@@ -19,6 +19,8 @@ const Agenda = () => {
   const [user, setUser] = useState("");
   const [fontsLoaded] = useFonts({ Montserrat_600SemiBold, Montserrat_500Medium});
   const [horarioSelecionado, setHorarioSelecionado] = useState(null);
+  const [dataSelecionada, setDataSelecionada] = useState(null);
+  const [camposPreenchidos, setCamposPreenchidos] = useState(false);
 
   Date.prototype.addDays = function (days) {
     const date = new Date(this.valueOf());
@@ -52,9 +54,10 @@ const Agenda = () => {
     getAccount();
   }, []);
 
-  const horariosDisponiveis = (val) => {
+   const horariosDisponiveis = (val) => {
     setSelected(val);
     setExibir(true);
+    setDataSelecionada(val);
   };
 
   const handleSevicoSelection = (selected) => {
@@ -66,7 +69,7 @@ const Agenda = () => {
   };
 
   if (!fontsLoaded) return null;
-  
+
   const data = [
     { key: '1', value: `${dataAtual.addDays(1).getDate()}/${dataAtual.addDays(1).getMonth() + 1}` },
     { key: '2', value: `${dataAtual.addDays(2).getDate()}/${dataAtual.addDays(2).getMonth() + 1}` },
@@ -115,12 +118,18 @@ const Agenda = () => {
 
   const criarAgendamento = async () => {
     try {
-      const agendamentoData = { usuario: user, servico: servico, horario: horario };
-      await addDoc(collection(db, 'agendamentos'), agendamentoData);
-      const mensagemAlerta = `Agendado com sucesso!\nDia: ${selected}\nHorário: ${horario}\nProcedimento: ${servico}`;
-      Alert.alert('Sucesso', mensagemAlerta);
-      setServico('');
-      setHorario('');
+      if (servico && horario && dataSelecionada) {
+        const agendamentoData = { usuario: user, servico: servico, horario: horario, data: dataSelecionada };
+        await addDoc(collection(db, 'agendamentos'), agendamentoData);
+        const mensagemAlerta = `Agendado com sucesso!\nDia: ${selected}\nHorário: ${horario}\nProcedimento: ${servico}`;
+        Alert.alert('Sucesso', mensagemAlerta);
+        setServico('');
+        setHorario('');
+        setCamposPreenchidos(true);
+      } else {
+        Alert.alert('Erro ao agendar:', 'Preencha todos os campos antes de agendar.');
+        setCamposPreenchidos(false);
+      }  
     } catch (error) {
       Alert.alert('Erro ao agendar:', error.message);
     }
@@ -159,7 +168,7 @@ const Agenda = () => {
         />
       ) : null}
 
-      <Button title="Agendar" onPress={criarAgendamento} />
+      <Button title="Agendar" onPress={criarAgendamento}/>
     </SafeAreaView>
   );
 };
