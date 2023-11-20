@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, Pressable, Button, Alert, View } from 'react-native'
+import { FlatList, SafeAreaView, StyleSheet, Text, Pressable, Button, Alert, View, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import {useFonts, Montserrat_500Medium, Montserrat_600SemiBold} from '@expo-google-fonts/montserrat'
 import { SelectList } from 'react-native-dropdown-select-list'
@@ -169,7 +169,7 @@ for (let i = 1; i <= 7; i++) {
   return (
     <SafeAreaView>
       <Text style={styles.titulo}>Boas vindas à sessão de agendamento!</Text>
-      <Text style={styles.t2}>Datas e horários disponíveis</Text>
+      <Text style={styles.t2}>Datas e horários disponíveis:</Text>
 
       <View style={{margin: 10}}>
         <SelectList
@@ -200,7 +200,12 @@ for (let i = 1; i <= 7; i++) {
           />
         ) : null}
 
-        <Button title="Agendar" onPress={criarAgendamento}/>
+        <TouchableOpacity
+        style={styles.button}
+        onPress={criarAgendamento}
+        >
+        <Text style={{...styles.titulo, color: "#ffff"}}>Agendar</Text>
+        </TouchableOpacity>
 
       </View>
     </SafeAreaView>
@@ -239,12 +244,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     margin: 10
   },
-  buttonEntrar:{
+  button: {
     backgroundColor: '#d886ff',
-    height: 'auto',
-    width: 60,
+    height: 60,
     borderRadius: 10,
-    justifyContent: 'space-between',
-    flexDirection:'column-reverse',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10
   },
 });
