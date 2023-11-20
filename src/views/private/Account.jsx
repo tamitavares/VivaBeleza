@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native'; // Importe o componente Text
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'; // Importe o componente Text
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getDocs, collection, query, where } from 'firebase/firestore';
@@ -11,6 +11,7 @@ const db = getFirestore(app)
 
 const Account = () => {
   const [user, setUser] = useState(null);
+  const [agendamentos, setAgendamentos] = useState(null);
 
   useEffect(() => {
     const auth = getAuth(app);
@@ -33,10 +34,29 @@ const Account = () => {
         alert('Erro ao buscar o usuário: ' + error.message);
       }
     };
+
     getAccount();
+
+    const getAgendamentos = async () => {
+      try {
+        const q = query(
+          collection(db, 'agendamentos'),
+          where('usuario.email', '==', auth.currentUser.email)
+        );
+        const agendamentosUser = await getDocs(q);
+        const dadosAgendamentos = agendamentosUser.docs.map(doc => doc.data());
+        setAgendamentos(dadosAgendamentos);
+      } catch (error) {
+        alert('Erro ao buscar agendamentos: ' + error.message);
+      }
+    };  
+
+    getAgendamentos()
+    
   }, []);
 
   return (
+    <ScrollView>
     <View style={styles.tela}>
       <Image source={require('./../images/logo.png')} style={styles.logo} />
       <View style={styles.ellipse}>
@@ -47,7 +67,20 @@ const Account = () => {
         {user && <Text>Email: {user.email}</Text>}
         {user && <Text>Celular: {user.phoneNumber}</Text>}
       </View>
+      <View>
+        <Text style={styles.titulo}>Meus agendamentos:</Text>
+        {agendamentos && agendamentos.length > 0 ? (
+          agendamentos.map((agendamento, index) => (
+            <Text key={index}>
+              {agendamento.servico}  -  {agendamento.data} às {agendamento.horario}
+            </Text>
+          ))
+        ) : (
+          <Text>Nenhum agendamento encontrado.</Text>
+        )}
+      </View>
     </View>
+    </ScrollView>
   );
 };
 
@@ -79,6 +112,7 @@ const styles = StyleSheet.create({
     //////fontFamily: 'Montserrat-Bold',
     fontSize: 23,
     fontWeight: '700',
-    margin: 10
+    margin: 20,
+    textAlign: 'center'
   },
 })

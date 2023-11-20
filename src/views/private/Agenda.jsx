@@ -29,7 +29,7 @@ const Agenda = () => {
     return date;
   };
 
-  const dataAtual = new Date();
+  // const dataAtual = new Date();
 
   useEffect(() => {
     const auth = getAuth(app);
@@ -71,25 +71,41 @@ const Agenda = () => {
 
   if (!fontsLoaded) return null;
 
-  const data = [
-    { key: '1', value: `${dataAtual.addDays(1).getDate()}/${dataAtual.addDays(1).getMonth() + 1}` },
-    { key: '2', value: `${dataAtual.addDays(2).getDate()}/${dataAtual.addDays(2).getMonth() + 1}` },
-    { key: '3', value: `${dataAtual.addDays(3).getDate()}/${dataAtual.addDays(3).getMonth() + 1}` },
-    { key: '4', value: `${dataAtual.addDays(4).getDate()}/${dataAtual.addDays(4).getMonth() + 1}` },
-    { key: '5', value: `${dataAtual.addDays(5).getDate()}/${dataAtual.addDays(5).getMonth() + 1}` },
-    { key: '6', value: `${dataAtual.addDays(6).getDate()}/${dataAtual.addDays(6).getMonth() + 1}` },
-    { key: '7', value: `${dataAtual.addDays(7).getDate()}/${dataAtual.addDays(7).getMonth() + 1}` },
-  ];
+  // const data = [
+  //   { key: '1', value: `${dataAtual.addDays(1).getDate()}/${dataAtual.addDays(1).getMonth() + 1}` },
+  //   { key: '2', value: `${dataAtual.addDays(2).getDate()}/${dataAtual.addDays(2).getMonth() + 1}` },
+  //   { key: '3', value: `${dataAtual.addDays(3).getDate()}/${dataAtual.addDays(3).getMonth() + 1}` },
+  //   { key: '4', value: `${dataAtual.addDays(4).getDate()}/${dataAtual.addDays(4).getMonth() + 1}` },
+  //   { key: '5', value: `${dataAtual.addDays(5).getDate()}/${dataAtual.addDays(5).getMonth() + 1}` },
+  //   { key: '6', value: `${dataAtual.addDays(6).getDate()}/${dataAtual.addDays(6).getMonth() + 1}` },
+  //   { key: '7', value: `${dataAtual.addDays(7).getDate()}/${dataAtual.addDays(7).getMonth() + 1}` },
+  // ];
+
+const dataAtual = new Date(); 
+
+const data = [];
+
+for (let i = 1; i <= 7; i++) {
+    const novaData = dataAtual.addDays(i);
+    
+    // Verificar se o dia da semana não é domingo (0) nem segunda-feira (1)
+    if (novaData.getDay() !== 0 && novaData.getDay() !== 1) {
+        data.push({
+            key: `${i}`,
+            value: `${novaData.getDate()}/${novaData.getMonth() + 1}`,
+        });
+    }
+}
 
   const servicosNomes = [
-    "Manicure",
-    "Pedicure",
-    "Depilação na Cera",
-    "Micropigmentação Labial",
-    "Limpeza de Pele",
-    "Spa dos Pés",
-    "Design de Sobrancelhas",
-    "Micropigmentação de Sobrancelhas",
+    "Manicure  -  R$27,00",
+    "Pedicure  -  R$30,00",
+    "Depilação na Cera  -  R$50,00",
+    "Micropigmentação Labial  -  R$850,00",
+    "Limpeza de Pele  -  R$120,00",
+    "Spa dos Pés  -  R$80,00",
+    "Design de Sobrancelhas  -  R$40,00",
+    "Micropigmentação de Sobrancelhas  -  R$480,00",
   ];
 
   state = {
