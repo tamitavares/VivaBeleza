@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'; // Importe o componente Text
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import {useFonts, Montserrat_500Medium, Montserrat_600SemiBold} from '@expo-google-fonts/montserrat'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 
 import { getFirestore } from "firebase/firestore";
@@ -12,6 +13,9 @@ const db = getFirestore(app)
 const Account = () => {
   const [user, setUser] = useState(null);
   const [agendamentos, setAgendamentos] = useState(null);
+  // const [fontsLoaded] = useFonts({ Montserrat_600SemiBold, Montserrat_500Medium});
+
+  // if (!fontsLoaded) return null;
 
   useEffect(() => {
     const auth = getAuth(app);
@@ -64,21 +68,22 @@ const Account = () => {
       </View>
       <View>
         {user && <Text style={styles.titulo}>{user.displayName}</Text>}
-        {user && <Text>Email: {user.email}</Text>}
-        {user && <Text>Celular: {user.phoneNumber}</Text>}
+        {user && <Text style={styles.texto}>Email: {user.email}</Text>}
+        {user && <Text style={styles.texto}>Celular: {user.phoneNumber}</Text>}
       </View>
-      <View>
+      <View style={{maxWidth: 300}}>
         <Text style={styles.titulo}>Meus agendamentos:</Text>
         {agendamentos && agendamentos.length > 0 ? (
           agendamentos.map((agendamento, index) => (
-            <Text key={index}>
-              {agendamento.servico}  -  {agendamento.data} às {agendamento.horario}
+            <Text key={index} style={styles.texto}>
+              <Text style={{ fontWeight: 'bold' }}>{agendamento.servico}</Text> - {agendamento.data} às {agendamento.horario}
             </Text>
           ))
         ) : (
           <Text>Nenhum agendamento encontrado.</Text>
         )}
       </View>
+      <View style={{ height: 100 }}></View>
     </View>
     </ScrollView>
   );
@@ -96,12 +101,12 @@ const styles = StyleSheet.create({
   tela: {
     backgroundColor: '#fafafa',
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   ellipse: {
     width: 152,
     height: 152,
-    borderRadius: 80, // metade da largura e altura para torná-lo uma elipse
+    borderRadius: 80,
     backgroundColor: '#D987FF',
     justifyContent: 'center',
     alignItems: 'center',
@@ -109,10 +114,13 @@ const styles = StyleSheet.create({
   },
   titulo: {
     color: '#000000',
-    //////fontFamily: 'Montserrat-Bold',
     fontSize: 23,
-    fontWeight: '700',
+    // fontWeight: '700',
+    fontFamily: 'Montserrat_600SemiBold',
     margin: 20,
     textAlign: 'center'
   },
+  texto:{
+    fontFamily: 'Montserrat_500Medium',
+  }
 })

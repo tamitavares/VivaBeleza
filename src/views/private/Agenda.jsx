@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, Pressable, Button, Alert } from 'react-native'
+import { FlatList, SafeAreaView, StyleSheet, Text, Pressable, Button, Alert, View } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import {useFonts, Montserrat_500Medium, Montserrat_600SemiBold} from '@expo-google-fonts/montserrat'
 import { SelectList } from 'react-native-dropdown-select-list'
@@ -70,16 +70,6 @@ const Agenda = () => {
   };
 
   if (!fontsLoaded) return null;
-
-  // const data = [
-  //   { key: '1', value: `${dataAtual.addDays(1).getDate()}/${dataAtual.addDays(1).getMonth() + 1}` },
-  //   { key: '2', value: `${dataAtual.addDays(2).getDate()}/${dataAtual.addDays(2).getMonth() + 1}` },
-  //   { key: '3', value: `${dataAtual.addDays(3).getDate()}/${dataAtual.addDays(3).getMonth() + 1}` },
-  //   { key: '4', value: `${dataAtual.addDays(4).getDate()}/${dataAtual.addDays(4).getMonth() + 1}` },
-  //   { key: '5', value: `${dataAtual.addDays(5).getDate()}/${dataAtual.addDays(5).getMonth() + 1}` },
-  //   { key: '6', value: `${dataAtual.addDays(6).getDate()}/${dataAtual.addDays(6).getMonth() + 1}` },
-  //   { key: '7', value: `${dataAtual.addDays(7).getDate()}/${dataAtual.addDays(7).getMonth() + 1}` },
-  // ];
 
 const dataAtual = new Date(); 
 
@@ -178,38 +168,41 @@ for (let i = 1; i <= 7; i++) {
   
   return (
     <SafeAreaView>
-      <Text style={styles.titulo}> Boas vindas à sessão de agendamento!</Text>
+      <Text style={styles.titulo}>Boas vindas à sessão de agendamento!</Text>
       <Text style={styles.t2}>Datas e horários disponíveis</Text>
 
-      <SelectList
-        setSelected={(val) => handleSevicoSelection(val)}
-        data={servicosNomes}
-        save="servicosNomes"
-      />
-      <SelectList
-        setSelected={(val) => horariosDisponiveis(val)}
-        data={data}
-        save="value"
-      />
-
-      {exibirHoras ? (
-        <FlatList
-          data={state.data} 
-          setSelected={(val) => handleHorarioSelection(val)}
-          keyExtractor={(item) => item.id}
-          numColumns={3}
-          renderItem={({ item }) => {
-            return (
-              <Pressable onPress={() => handleHorarioSelection(item.value) }
-              style={[ styles.item, {backgroundColor: item.value === horarioSelecionado ? '#3702E0' : '#cc88ff' },]}>
-                <Text style={styles.text}>{item.name}</Text>
-              </Pressable>
-            );
-          }}
+      <View style={{margin: 10}}>
+        <SelectList
+          setSelected={(val) => handleSevicoSelection(val)}
+          data={servicosNomes}
+          save="servicosNomes"
         />
-      ) : null}
+        <SelectList
+          setSelected={(val) => horariosDisponiveis(val)}
+          data={data}
+          save="value"
+        />
 
-      <Button title="Agendar" onPress={criarAgendamento}/>
+        {exibirHoras ? (
+          <FlatList
+            data={state.data} 
+            setSelected={(val) => handleHorarioSelection(val)}
+            keyExtractor={(item) => item.id}
+            numColumns={3}
+            renderItem={({ item }) => {
+              return (
+                <Pressable onPress={() => handleHorarioSelection(item.value) }
+                style={[ styles.item, {backgroundColor: item.value === horarioSelecionado ? '#3702E0' : '#cc88ff' },]}>
+                  <Text style={styles.text}>{item.name}</Text>
+                </Pressable>
+              );
+            }}
+          />
+        ) : null}
+
+        <Button title="Agendar" onPress={criarAgendamento}/>
+
+      </View>
     </SafeAreaView>
   );
 };
@@ -220,7 +213,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
   item: {
     alignItems: "center",
@@ -230,18 +223,21 @@ const styles = StyleSheet.create({
     padding: 10
   },
   text: {
-    color: "#ffff"
+    color: "#ffff",
+    fontFamily: 'Montserrat_500Medium',
   },
   titulo: {
     color: '#000000',
     fontFamily: 'Montserrat_600SemiBold',
     fontSize: 18,
+    margin: 10
   },
   t2: {
     color: '#000000',
     fontFamily: 'Montserrat_500Medium',
     textAlign: 'justify',
     fontSize: 18,
+    margin: 10
   },
   buttonEntrar:{
     backgroundColor: '#d886ff',
