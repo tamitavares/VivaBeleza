@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image, Dimensions, Alert, Modal, Pressable } from 'react-native'
+import { StyleSheet, View, Text, Image, Dimensions, Alert, Modal, Pressable, ScrollView } from 'react-native'
 import Carousel, { PaginationLight } from 'react-native-x-carousel';
 import { useFonts, Montserrat_700Bold, Montserrat_600SemiBold,  Montserrat_500Medium } from '@expo-google-fonts/montserrat';
 import React, {useState} from 'react';
@@ -136,12 +136,12 @@ const Home = () => {
         autoplay
       />
       <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-        setModalVisible(!modalVisible);
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
@@ -204,13 +204,13 @@ const styles = StyleSheet.create({
   },
   titulo: {
     color: '#000000',
-    //fontFamily: 'Montserrat_700Bold',
+    fontFamily: 'Montserrat_700Bold',
     fontSize: 33,
     left: 20,
   },
   t2: {
     color: '#000000',
-    //fontFamily: 'Montserrat_600SemiBold',
+    fontFamily: 'Montserrat_600SemiBold',
     fontSize: 20,
     left: 10,
   },
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
     textAlign: 'justify',
-    //fontFamily: 'Montserrat_500Medium'
+    fontFamily: 'Montserrat_500Medium'
   },
 });
 
