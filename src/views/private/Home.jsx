@@ -114,49 +114,47 @@ const Home = () => {
   );
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
-          <Text style={styles.titulo}>Bem vindo!</Text>
-          <Image source={require('./../images/logo.png')} style={styles.imgLogo} />
-        </View>
-        <Text style={styles.t2}> Serviços Disponíveis </Text>
-        <Carousel
-          pagination={PaginationLight}
-          renderItem={renderItem}
-          data={DATA}
-          loop
-          autoplay
-        />
-        <Text style={styles.t2}> Pacotes </Text>
-        <Carousel
-          pagination={PaginationLight}
-          renderItem={renderItem}
-          data={DATA1}
-          loop
-          autoplay
-        />
-        <Modal
+    <View style={styles.container}>
+      <View style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+        <Text style={styles.titulo}>Bem vindo!</Text>
+        <Image source={require('./../images/logo.png')} style={styles.imgLogo} />
+      </View>
+      <Text style={styles.t2}> Serviços Disponíveis </Text>
+      <Carousel
+        pagination={PaginationLight}
+        renderItem={renderItem}
+        data={DATA}
+        loop
+        autoplay
+      />
+      <Text style={styles.t2}> Pacotes </Text>
+      <Carousel
+        pagination={PaginationLight}
+        renderItem={renderItem}
+        data={DATA1}
+        loop
+        autoplay
+      />
+      <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
           Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.textStyle}>{modalData?modalData.description:""}</Text>
-            <Pressable
-              style={[styles.button, styles.button]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Fechar</Text>
-            </Pressable>
-          </View>
+      }}>
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <Text style={styles.textStyle}>{modalData?modalData.description:""}</Text>
+          <Pressable
+            style={[styles.button, styles.button]}
+            onPress={() => setModalVisible(!modalVisible)}>
+            <Text style={styles.textStyle}>Fechar</Text>
+          </Pressable>
         </View>
-        </Modal>
       </View>
-    </ScrollView>
+      </Modal>
+    </View>
   );
 };
   
