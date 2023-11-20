@@ -28,7 +28,7 @@ const SignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log("Login de usuário:", user);
+        // console.log("Login de usuário:", user);
         Alert.alert("Usuário logado");
         navigateToNavigator();
       })

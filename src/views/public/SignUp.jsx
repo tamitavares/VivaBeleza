@@ -43,7 +43,7 @@ function SignUp() {
         phoneNumber: phoneNumber,
         uid: uid,
       });
-      console.log('Document written with ID: ', docRef.id);
+      // console.log('Document written with ID: ', docRef.id);
       Alert.alert('Usuário ' + displayName + ' cadastrado com sucesso!');
       navigateToSignIn();
     } catch (error) {
