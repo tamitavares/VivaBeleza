@@ -23,6 +23,12 @@ const Agenda = () => {
   const [camposPreenchidos, setCamposPreenchidos] = useState(false);
   const [horarioOcupado, setHorarioOcupado] = useState(false);
 
+
+
+  const [servicoAgenda, setServicoAgenda] = useState(false);
+
+
+
   Date.prototype.addDays = function (days) {
     const date = new Date(this.valueOf());
     date.setDate(date.getDate() + days);
@@ -53,6 +59,24 @@ const Agenda = () => {
       }
     };
     getAccount();
+
+
+    const getServicoAgenda = async () => {
+      try {
+        const qSnapshot = await getDocs(collection(db, 'horarios'));
+        const servicoData = [];
+        qSnapshot.forEach((doc) => {
+          servicoData.push(doc.data().servico);
+        });
+        setServicoAgenda(servicoData);
+      } catch (error) {
+        alert('Erro ao buscar agenda: ' + error.message);
+      }
+    }
+    getServicoAgenda()
+
+
+
   }, []);
 
    const horariosDisponiveis = (val) => {
@@ -174,8 +198,8 @@ for (let i = 1; i <= 7; i++) {
       <View style={{margin: 10}}>
         <SelectList
           setSelected={(val) => handleSevicoSelection(val)}
-          data={servicosNomes}
-          save="servicosNomes"
+          data={servicoAgenda}
+          save="servicoAgenda"
         />
         <SelectList
           setSelected={(val) => horariosDisponiveis(val)}
