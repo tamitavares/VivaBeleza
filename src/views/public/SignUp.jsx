@@ -34,6 +34,11 @@ function SignUp() {
 
   const authSignUp = async () => {
     try {
+      if (password.length < 6) {
+        Alert.alert('Erro no cadastro', 'A senha deve ter pelo menos 6 caracteres.');
+        return;
+      }
+
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       const uid = user.uid;
