@@ -25,8 +25,9 @@ const Agenda = () => {
 
 
 
-  const [servicoAgenda, setServicoAgenda] = useState(false);
-  const [diaAgenda, setDiaAgenda] = useState(false);
+
+  const [services, setServices] = useState({ data: [] });
+
 
 
 
@@ -61,56 +62,37 @@ const Agenda = () => {
     };
     getAccount();
 
-
-    // const getServicoAgenda = async () => {
-    //   try {
-    //     const qSnapshot = await getDocs(collection(db, 'horarios'));
-    //     const servicoData = [];
-    //     qSnapshot.forEach((doc) => {
-    //       servicoData.push(doc.data().servico);
-    //     });
-    //     setServicoAgenda(servicoData);
-    //   } catch (error) {
-    //     alert('Erro ao buscar agenda: ' + error.message);
-    //   }
-    // }
-    // getServicoAgenda()
-
-    // const getDiaAgenda = async () => {
-    //   try {
-    //     const qSnapshot = await getDocs(collection(db, 'horarios'), where("servico", "==", servico));
-    //     const docs = qSnapshot.docs;
-
-    //     for (const doc of docs) {
-    //       const id = doc.id;
-
-    //       const agendaSnapshot = await getDocs(collection(db, 'horarios', id, 'agenda'));
-    //       const agendaDocs = agendaSnapshot.docs;
-    
-    //       const agendaData = [];
-    //       agendaDocs.forEach((doc) => {
-    //         agendaData.push(doc.data().dia);
-    //       });
-    //       setDiaAgenda(agendaData)
-    //       console.log(diaAgenda)
-    //     }
-    
-    //   } catch (error) {
-    //     alert('Erro ao buscar agenda: ' + error.message);
-    //   }
-    // };
-    
-    // getDiaAgenda()
-
-
+    const dados = {
+      data: [
+        {id: "00", nome: "Manicure  -  R$27,00", dia: "05/12", value: "08:00", agendado: false},
+        {id: "01", nome: "Manicure  -  R$27,00", dia: "05/12", value: "09:00", agendado: false},
+        {id: "02", nome: "Manicure  -  R$27,00", dia: "05/12", value: "10:00", agendado: false},
+        {id: "03", nome: "Manicure  -  R$27,00", dia: "05/12", value: "11:00", agendado: false},
+  
+  
+        {id: "04", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "08:00", agendado: false},
+        {id: "05", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "09:00", agendado: false},
+        {id: "06", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "10:00", agendado: false},
+        {id: "07", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "11:00", agendado: false},
+      ]
+    }
+    setServices(dados)
 
   }, []);
 
-   const horariosDisponiveis = (val) => {
+  const horariosDisponiveis = (val) => {
     setSelected(val);
+  
+    // Filtrar os horários disponíveis antes de exibi-los
+    const horariosDisponiveis = services.data.filter(
+      (item) => !(item.agendado)
+    );
+  
+    setServices({ data: horariosDisponiveis });
     setExibir(true);
     setDataSelecionada(val);
   };
+  
 
   const handleServicoSeletion = (selected) => {
     setServico(selected);
@@ -121,21 +103,6 @@ const Agenda = () => {
   };
 
   if (!fontsLoaded) return null;
-
-  const services = {
-    data: [
-      {id: "00", nome: "Manicure  -  R$27,00", dia: "05/12", value: "08:00", agendado: false},
-      {id: "01", nome: "Manicure  -  R$27,00", dia: "05/12", value: "09:00", agendado: false},
-      {id: "02", nome: "Manicure  -  R$27,00", dia: "05/12", value: "10:00", agendado: false},
-      {id: "03", nome: "Manicure  -  R$27,00", dia: "05/12", value: "11:00", agendado: false},
-
-
-      {id: "04", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "08:00", agendado: false},
-      {id: "05", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "09:00", agendado: false},
-      {id: "06", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "10:00", agendado: false},
-      {id: "07", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "11:00", agendado: false},
-    ]
-  }
 
   const dias = [
     "05/12"
@@ -157,16 +124,34 @@ const Agenda = () => {
       if (servico && horario && dataSelecionada) {
         const horarioOcupado = await verificarHorarioOcupado(dataSelecionada, horario);
         if (horarioOcupado) {
+          // Remover o item correspondente em services.data
+          const updatedServices = services.data.filter(
+            (item) => !(item.nome.includes(servico) && item.dia === dataSelecionada && item.value === horario)
+          );
+          setServices({ data: updatedServices });
+  
+          // Avisar ao usuário que o horário já está ocupado
           Alert.alert('Erro ao agendar:', 'Este horário já está ocupado. Escolha outro horário.');
           setHorarioOcupado(true);
           return;
         }
   
+        // Encontrar o item correspondente em services.data
+        const index = services.data.findIndex(item => item.nome.includes(servico) && item.dia === dataSelecionada && item.value === horario);
+  
+        if (index !== -1) {
+          // Atualizar a propriedade agendado para true
+          const updatedServices = [...services.data];
+          updatedServices[index].agendado = true;
+          setServices({ data: updatedServices });
+        }
+  
+        // Restante do código para criar o agendamento...
         const agendamentoData = { usuario: user, servico: servico, horario: horario, data: dataSelecionada };
         await addDoc(collection(db, 'agendamentos'), agendamentoData);
         const mensagemAlerta = `Agendado com sucesso!\nDia: ${selected}\nHorário: ${horario}\nProcedimento: ${servico}`;
         Alert.alert('Sucesso', mensagemAlerta);
-        
+  
         setServico('');
         setHorario('');
         setCamposPreenchidos(true);
@@ -174,26 +159,27 @@ const Agenda = () => {
       } else {
         Alert.alert('Erro ao agendar:', 'Preencha todos os campos antes de agendar.');
         setCamposPreenchidos(false);
-      }   
+      }
     } catch (error) {
       Alert.alert('Erro ao agendar:', error.message);
     }
   };
+  
 
-  // const verificarHorarioOcupado = async (data, horario) => {
-  //   try {
-  //     const q = query(
-  //       collection(db, 'agendamentos'),
-  //       where('data', '==', data),
-  //       where('horario', '==', horario)
-  //     );
-  //     const agendamentos = await getDocs(q);
-  //     return agendamentos.size > 0;
-  //   } catch (error) {
-  //     console.error('Erro ao verificar horário ocupado:', error);
-  //     return true;
-  //   }
-  // };
+  const verificarHorarioOcupado = async (data, horario) => {
+    try {
+      const q = query(
+        collection(db, 'agendamentos'),
+        where('data', '==', data),
+        where('horario', '==', horario)
+      );
+      const agendamentos = await getDocs(q);
+      return agendamentos.size > 0;
+    } catch (error) {
+      console.error('Erro ao verificar horário ocupado:', error);
+      return true;
+    }
+  };
   
   return (
     <SafeAreaView>
