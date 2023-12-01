@@ -74,6 +74,12 @@ const Agenda = () => {
         {id: "05", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "09:00", agendado: false},
         {id: "06", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "10:00", agendado: false},
         {id: "07", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "11:00", agendado: false},
+
+        {id: "04", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "08:00", agendado: false},
+        {id: "05", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "09:00", agendado: false},
+        {id: "06", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "10:00", agendado: false},
+        {id: "07", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "11:00", agendado: false},
+        
       ]
     }
     setServices(dados)
@@ -105,7 +111,11 @@ const Agenda = () => {
   if (!fontsLoaded) return null;
 
   const dias = [
-    "05/12"
+    "05/12",
+    "06/12",
+    "07/12",
+    "08/12",
+    "09/12",
   ]
 
   const servicosNomes = [
