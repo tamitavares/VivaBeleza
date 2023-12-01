@@ -4,7 +4,7 @@ import {useFonts, Montserrat_500Medium, Montserrat_600SemiBold} from '@expo-goog
 import { SelectList } from 'react-native-dropdown-select-list'
 
 import { getAuth} from 'firebase/auth';
-import { getDocs, collection, query, where, addDoc } from 'firebase/firestore';
+import { getDocs, collection, query, where, addDoc, updateDoc} from 'firebase/firestore';
 
 import { getFirestore } from "firebase/firestore";
 import { app } from './../../../firebaseConfig'
@@ -20,9 +20,6 @@ const Agenda = () => {
   const [fontsLoaded] = useFonts({ Montserrat_600SemiBold, Montserrat_500Medium});
   const [horarioSelecionado, setHorarioSelecionado] = useState(null);
   const [dataSelecionada, setDataSelecionada] = useState(null);
-  const [camposPreenchidos, setCamposPreenchidos] = useState(false);
-  const [horarioOcupado, setHorarioOcupado] = useState(false);
-
 
 
 
@@ -132,17 +129,12 @@ const Agenda = () => {
     };
     getAgendamentos();
     
-
-      // setSelected(diaSelected);
-    
-      // setServices({ data: horariosDisponiveis });
-      
-      // setDataSelecionada(diaSelected);
   };
 
   const horariosDisponiveis = (diaSelected) => {
     console.log(diaSelected);
-  
+    setDataSelecionada(diaSelected)
+
     const puxarHora = async () => {
       try {
         const q3 = query(
@@ -180,65 +172,39 @@ const Agenda = () => {
 
   const criarAgendamento = async () => {
     try {
-      if (servico && horario && dataSelecionada) {
-        const horarioOcupado = await verificarHorarioOcupado(dataSelecionada, horario);
-        if (horarioOcupado) {
-          // Remover o item correspondente em services.data
-          const updatedServices = services.data.filter(
-            (item) => !(item.nome.includes(servico) && item.dia === dataSelecionada && item.value === horario)
-          );
-          setServices({ data: updatedServices });
+      const q = query(
+        collection(db, `horarios/${servicoSelecionado}/agenda`),
+        where("dia", "==", dataSelecionada),
+        where("hora", "==", horarioSelecionado)
+      );
+      const querySnapshot = await getDocs(q);
   
-          // Avisar ao usuário que o horário já está ocupado
-          Alert.alert('Erro ao agendar:', 'Este horário já está ocupado. Escolha outro horário.');
-          setHorarioOcupado(true);
-          return;
-        }
+      if (querySnapshot.size > 0) {
+        
+        const docRef = querySnapshot.docs[0].ref;
   
-        // Encontrar o item correspondente em services.data
-        const index = services.data.findIndex(item => item.nome.includes(servico) && item.dia === dataSelecionada && item.value === horario);
-  
-        if (index !== -1) {
-          // Atualizar a propriedade agendado para true
-          const updatedServices = [...services.data];
-          updatedServices[index].agendado = true;
-          setServices({ data: updatedServices });
-        }
-  
-        // Restante do código para criar o agendamento...
+        
+        await updateDoc(docRef, { agendado: true });
+        
         const agendamentoData = { usuario: user, servico: servico, horario: horario, data: dataSelecionada };
         await addDoc(collection(db, 'agendamentos'), agendamentoData);
-        const mensagemAlerta = `Agendado com sucesso!\nDia: ${selected}\nHorário: ${horario}\nProcedimento: ${servico}`;
+    
+        const mensagemAlerta = `Agendado com sucesso!\nDia: ${dataSelecionada}\nHorário: ${horario}\nProcedimento: ${servico}`;
         Alert.alert('Sucesso', mensagemAlerta);
-  
+    
         setServico('');
         setHorario('');
         setCamposPreenchidos(true);
         setHorarioOcupado(false);
       } else {
-        Alert.alert('Erro ao agendar:', 'Preencha todos os campos antes de agendar.');
-        setCamposPreenchidos(false);
+        alert('Agendamento não encontrado.');
       }
+  
     } catch (error) {
       Alert.alert('Erro ao agendar:', error.message);
     }
   };
   
-
-  const verificarHorarioOcupado = async (data, horario) => {
-    try {
-      const q = query(
-        collection(db, 'agendamentos'),
-        where('data', '==', data),
-        where('horario', '==', horario)
-      );
-      const agendamentos = await getDocs(q);
-      return agendamentos.size > 0;
-    } catch (error) {
-      console.error('Erro ao verificar horário ocupado:', error);
-      return true;
-    }
-  };
   
   return (
     <SafeAreaView>
