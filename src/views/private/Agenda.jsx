@@ -27,7 +27,11 @@ const Agenda = () => {
 
 
   const [services, setServices] = useState({ data: [] });
-
+  const [dia, setDia] = useState({ data: [] });
+  const [hora, setHora] = useState({ data: [] });
+  const [servicosNomes, setServicosNomes] = useState({ data: [] });
+  
+  const [servicoSelecionado, setServicoSelecionado] = useState(null);
 
 
 
@@ -62,47 +66,110 @@ const Agenda = () => {
     };
     getAccount();
 
-    const dados = {
-      data: [
-        {id: "00", nome: "Manicure  -  R$27,00", dia: "05/12", value: "08:00", agendado: false},
-        {id: "01", nome: "Manicure  -  R$27,00", dia: "05/12", value: "09:00", agendado: false},
-        {id: "02", nome: "Manicure  -  R$27,00", dia: "05/12", value: "10:00", agendado: false},
-        {id: "03", nome: "Manicure  -  R$27,00", dia: "05/12", value: "11:00", agendado: false},
-  
-  
-        {id: "04", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "08:00", agendado: false},
-        {id: "05", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "09:00", agendado: false},
-        {id: "06", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "10:00", agendado: false},
-        {id: "07", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "11:00", agendado: false},
-
-        {id: "04", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "08:00", agendado: false},
-        {id: "05", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "09:00", agendado: false},
-        {id: "06", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "10:00", agendado: false},
-        {id: "07", nome: "Pedicure  -  R$30,00", dia: "05/12", value: "11:00", agendado: false},
-        
-      ]
+    const getNomeServico = async () => {
+      try{
+        const q = query(
+          collection(db, 'horarios'),
+        );
+        const nome = await getDocs(q);
+        const nomeData = [];
+        nome.forEach((doc) => {
+          nomeData.push(doc.data().servico)
+        })
+        setServicosNomes(nomeData)
+        // console.log(servicosNomes)
+      }
+      catch (error) {
+        alert('Erro ao buscar os nomes: ' + error.message);
+      }
     }
-    setServices(dados)
+    getNomeServico()
 
-  }, []);
-
-  const horariosDisponiveis = (val) => {
-    setSelected(val);
-  
-    // Filtrar os horários disponíveis antes de exibi-los
-    const horariosDisponiveis = services.data.filter(
-      (item) => !(item.agendado)
-    );
-  
-    setServices({ data: horariosDisponiveis });
-    setExibir(true);
-    setDataSelecionada(val);
-  };
-  
+  }, []); 
 
   const handleServicoSeletion = (selected) => {
+    console.log(selected)
     setServico(selected);
+
+    const getAgendamentos = async () => {
+      try {
+        const q = query(
+          collection(db, 'horarios'),
+          where('servico', '==', selected)
+        );
+        const nome = await getDocs(q);
+        setServicoSelecionado(nome.docs[0].id)
+    
+        if (nome.size > 0) {
+          const q2 = query(
+            collection(db, `horarios/${nome.docs[0].id}/agenda`),
+            where('agendado', '==', false),
+          );
+          const agendamentos = await getDocs(q2);
+    
+          const agendaData = [];
+          const diasSet = new Set();
+          // const horasSet = new Set();
+    
+          agendamentos.forEach((doc) => {
+            const data = doc.data();
+            agendaData.push(data);
+            diasSet.add(data.dia);
+            // horasSet.add(data.hora);
+          });
+    
+          setServices(agendaData);
+          setDia([...diasSet]);
+          // setHora([...horasSet]);
+    
+          console.log(services);
+        } else {
+          alert('Horário não encontrado para o serviço especificado.');
+        }
+      } catch (error) {
+        alert('Erro ao buscar os agendamentos: ' + error.message);
+      }
+    };
+    getAgendamentos();
+    
+
+      // setSelected(diaSelected);
+    
+      // setServices({ data: horariosDisponiveis });
+      
+      // setDataSelecionada(diaSelected);
   };
+
+  const horariosDisponiveis = (diaSelected) => {
+    console.log(diaSelected);
+  
+    const puxarHora = async () => {
+      try {
+        const q3 = query(
+          collection(db, `horarios/${servicoSelecionado}/agenda`),
+          where('dia', '==', diaSelected),
+        );
+        const h = await getDocs(q3);
+        let ho = [];
+  
+        h.forEach((doc) => {
+          ho.push(doc.data().hora);
+        });
+        ho.sort();
+  
+        setHora(ho);
+        console.log(hora);
+      } catch (error) {
+        alert('Erro ao buscar os horários: ' + error.message);
+      }
+    };
+  
+    setExibir(true);
+    puxarHora();
+  };
+  
+
+
   const handleHorarioSelection = (selectedHorario) => {
     setHorario(selectedHorario);
     setHorarioSelecionado(selectedHorario);
@@ -110,24 +177,6 @@ const Agenda = () => {
 
   if (!fontsLoaded) return null;
 
-  const dias = [
-    "05/12",
-    "06/12",
-    "07/12",
-    "08/12",
-    "09/12",
-  ]
-
-  const servicosNomes = [
-    "Manicure  -  R$27,00",
-    "Pedicure  -  R$30,00",
-    "Depilação na Cera  -  R$50,00",
-    "Micropigmentação Labial  -  R$850,00",
-    "Limpeza de Pele  -  R$120,00",
-    "Spa dos Pés  -  R$80,00",
-    "Design de Sobrancelhas  -  R$40,00",
-    "Micropigmentação de Sobrancelhas  -  R$480,00",
-  ];
 
   const criarAgendamento = async () => {
     try {
@@ -204,26 +253,32 @@ const Agenda = () => {
         />
         <SelectList
           setSelected={(val) => horariosDisponiveis(val)}
-          data={dias}
+          data={dia}
           save="value"
         />
 
-    {exibirHoras ? (
-      <FlatList
-        data={services.data.filter(item => item.nome.includes(servico) && item.dia.includes(dataSelecionada))}
-        setSelected={(val) => handleHorarioSelection(val)}
-        keyExtractor={(item) => item.id}
-        numColumns={3}
-        renderItem={({ item }) => {
-          return (
-            <Pressable onPress={() => handleHorarioSelection(item.value) }
-              style={[ styles.item, {backgroundColor: item.value === horarioSelecionado ? '#3702E0' : '#cc88ff' },]}>
-              <Text style={styles.text}>{item.value}</Text>
-            </Pressable>
-          );
-        }}
-      />
-    ) : null}
+{exibirHoras ? (
+  <FlatList
+    data={hora}
+    renderItem={({ item }) => (
+      <Pressable
+        onPress={() => handleHorarioSelection(item)}
+        style={[
+          styles.item,
+          {
+            backgroundColor: item === horarioSelecionado ? '#3702E0' : '#cc88ff',
+          },
+        ]}
+      >
+        <Text style={styles.text}>{item}</Text>
+      </Pressable>
+    )}
+    keyExtractor={(item) => item}  // Use item diretamente como chave
+    numColumns={3}
+  />
+) : null}
+
+
 
         <TouchableOpacity
         style={styles.button}
