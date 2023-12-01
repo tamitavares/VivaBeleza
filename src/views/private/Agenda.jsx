@@ -100,7 +100,7 @@ const Agenda = () => {
         if (nome.size > 0) {
           const q2 = query(
             collection(db, `horarios/${nome.docs[0].id}/agenda`),
-            where('agendado', '==', false),
+            where('agendado', '!=', true),
           );
           const agendamentos = await getDocs(q2);
     
@@ -194,8 +194,9 @@ const Agenda = () => {
     
         setServico('');
         setHorario('');
-        setCamposPreenchidos(true);
-        setHorarioOcupado(false);
+        setDataSelecionada('');
+        // setCamposPreenchidos(true);
+        // setHorarioOcupado(false);
       } else {
         alert('Agendamento não encontrado.');
       }
