@@ -2,6 +2,7 @@ import { FlatList, SafeAreaView, StyleSheet, Text, Pressable, Button, Alert, Vie
 import React, { useState, useEffect } from 'react'
 import {useFonts, Montserrat_500Medium, Montserrat_600SemiBold} from '@expo-google-fonts/montserrat'
 import { SelectList } from 'react-native-dropdown-select-list'
+import { useNavigation } from '@react-navigation/native'
 
 import { getAuth} from 'firebase/auth';
 import { getDocs, collection, query, where, addDoc } from 'firebase/firestore';
@@ -22,6 +23,7 @@ const Agenda = () => {
   const [dataSelecionada, setDataSelecionada] = useState(null);
   const [camposPreenchidos, setCamposPreenchidos] = useState(false);
   const [horarioOcupado, setHorarioOcupado] = useState(false);
+  const navigation = useNavigation();
 
   Date.prototype.addDays = function (days) {
     const date = new Date(this.valueOf());
@@ -123,6 +125,47 @@ for (let i = 1; i <= 7; i++) {
       { id: "20", name: "18:00", value: "18:00" },
     ],}
 
+  // const criarAgendamento = async () => {
+  //   try {
+  //     if (servico && horario && dataSelecionada) {
+  //       const horarioOcupado = await verificarHorarioOcupado(dataSelecionada, horario);
+  //       if (horarioOcupado) {
+  //         Alert.alert('Erro ao agendar:', 'Este horário já está ocupado. Escolha outro horário.');
+  //         setHorarioOcupado(true);
+  //         return;
+  //       }
+  
+  //       const agendamentoData = { usuario: user, servico: servico, horario: horario, data: dataSelecionada };
+  //       await addDoc(collection(db, 'agendamentos'), agendamentoData);
+  //       const mensagemAlerta = `Agendado com sucesso!\nDia: ${selected}\nHorário: ${horario}\nProcedimento: ${servico}`;
+  //       Alert.alert('Sucesso', mensagemAlerta);
+        
+  //       setServico("");
+  //       setHorario("");
+  //       setDataSelecionada(null);
+  
+  //       setCamposPreenchidos(true);
+  //       setHorarioOcupado(false);
+  //     } else {
+  //       Alert.alert('Erro ao agendar:', 'Preencha todos os campos antes de agendar.');
+  //       setCamposPreenchidos(false);
+  //     }   
+  //   } catch (error) {
+  //     Alert.alert('Erro ao agendar:', error.message);
+  //   }
+  // };
+  
+  const resetStates = () => {
+    setSelected('');
+    setExibir(false);
+    setServico('');
+    // setHorario('');
+    setHorarioSelecionado(null);
+    setDataSelecionada(null);
+    setCamposPreenchidos(true);
+    setHorarioOcupado(false);
+  };
+
   const criarAgendamento = async () => {
     try {
       if (servico && horario && dataSelecionada) {
@@ -132,20 +175,20 @@ for (let i = 1; i <= 7; i++) {
           setHorarioOcupado(true);
           return;
         }
-  
+
         const agendamentoData = { usuario: user, servico: servico, horario: horario, data: dataSelecionada };
         await addDoc(collection(db, 'agendamentos'), agendamentoData);
         const mensagemAlerta = `Agendado com sucesso!\nDia: ${selected}\nHorário: ${horario}\nProcedimento: ${servico}`;
         Alert.alert('Sucesso', mensagemAlerta);
-        
-        setServico('');
-        setHorario('');
-        setCamposPreenchidos(true);
-        setHorarioOcupado(false);
+
       } else {
         Alert.alert('Erro ao agendar:', 'Preencha todos os campos antes de agendar.');
-        setCamposPreenchidos(false);
-      }   
+      }
+       // Limpar os dados após o agendamento
+       resetStates();
+
+       // Forçar um recarregamento da página
+       navigation.navigate('Agenda');
     } catch (error) {
       Alert.alert('Erro ao agendar:', error.message);
     }
