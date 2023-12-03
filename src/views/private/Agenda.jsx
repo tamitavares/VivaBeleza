@@ -40,6 +40,14 @@ const Agenda = () => {
 
   // const dataAtual = new Date();
 
+  const resetState = () => {
+    setExibir(false);
+    setHorarioSelecionado(null);
+    setDataSelecionada(null);
+    setDia({ data: [] });
+    setHora({ data: [] });
+  };
+
   useEffect(() => {
     const auth = getAuth(app);
 
@@ -85,7 +93,7 @@ const Agenda = () => {
   }, []); 
 
   const handleServicoSeletion = (selected) => {
-    console.log(selected)
+    //console.log(selected)
     setServico(selected);
 
     const getAgendamentos = async () => {
@@ -119,7 +127,7 @@ const Agenda = () => {
           setDia([...diasSet]);
           // setHora([...horasSet]);
     
-          console.log(services);
+          // console.log(services);
         } else {
           alert('Horário não encontrado para o serviço especificado.');
         }
@@ -132,7 +140,7 @@ const Agenda = () => {
   };
 
   const horariosDisponiveis = (diaSelected) => {
-    console.log(diaSelected);
+    //console.log(diaSelected);
     setDataSelecionada(diaSelected)
 
     const puxarHora = async () => {
@@ -145,12 +153,15 @@ const Agenda = () => {
         let ho = [];
   
         h.forEach((doc) => {
-          ho.push(doc.data().hora);
+          if(doc.data().agendado==false){
+            ho.push(doc.data().hora);
+          }
+          
         });
         ho.sort();
   
         setHora(ho);
-        console.log(hora);
+       // console.log(hora);
       } catch (error) {
         alert('Erro ao buscar os horários: ' + error.message);
       }
@@ -163,8 +174,9 @@ const Agenda = () => {
 
 
   const handleHorarioSelection = (selectedHorario) => {
-    setHorario(selectedHorario);
+    // setHorario(selectedHorario);
     setHorarioSelecionado(selectedHorario);
+    //console.log(horarioSelecionado)
   };
 
   if (!fontsLoaded) return null;
@@ -186,10 +198,10 @@ const Agenda = () => {
         
         await updateDoc(docRef, { agendado: true });
         
-        const agendamentoData = { usuario: user, servico: servico, horario: horario, data: dataSelecionada };
+        const agendamentoData = { usuario: user, servico: servico, horario: horarioSelecionado, data: dataSelecionada };
         await addDoc(collection(db, 'agendamentos'), agendamentoData);
     
-        const mensagemAlerta = `Agendado com sucesso!\nDia: ${dataSelecionada}\nHorário: ${horario}\nProcedimento: ${servico}`;
+        const mensagemAlerta = `Agendado com sucesso!\nDia: ${dataSelecionada}\nHorário: ${horarioSelecionado}\nProcedimento: ${servico}`;
         Alert.alert('Sucesso', mensagemAlerta);
     
         setServico('');
@@ -240,17 +252,20 @@ const Agenda = () => {
         <Text style={styles.text}>{item}</Text>
       </Pressable>
     )}
-    keyExtractor={(item) => item}  // Use item diretamente como chave
+    keyExtractor={(item) => item} 
     numColumns={3}
   />
 ) : null}
 
 
 
-        <TouchableOpacity
+      <TouchableOpacity
         style={styles.button}
-        onPress={criarAgendamento}
-        >
+        onPress={() => {
+          criarAgendamento();
+          resetState(); 
+        }}
+      >
         <Text style={{...styles.titulo, color: "#ffff"}}>Agendar</Text>
         </TouchableOpacity>
 
