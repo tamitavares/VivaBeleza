@@ -114,6 +114,7 @@ const Home = () => {
   );
 
   return (
+    <ScrollView>
     <View style={styles.container}>
       <View style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
         <Text style={styles.titulo}>Bem vindo!</Text>
@@ -155,6 +156,7 @@ const Home = () => {
       </View>
       </Modal>
     </View>
+    </ScrollView>
   );
 };
   

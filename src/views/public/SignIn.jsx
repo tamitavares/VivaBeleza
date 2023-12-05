@@ -33,7 +33,12 @@ const SignIn = () => {
         navigateToNavigator();
       })
       .catch(error => {
-        console.error("Usuário não registrado:", error);
+        const errorCode = error.code;
+        if (errorCode === "auth/wrong-password") {
+          Alert.alert("Erro", "Senha incorreta. Por favor, tente novamente.");
+        } else {
+          console.error("Erro no login:", error);
+        }
       });
   };
   
